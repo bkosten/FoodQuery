@@ -2,6 +2,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -11,12 +12,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 public class AppPaneFactory {
     public static AppPane createPane(PaneType paneType) {
@@ -51,6 +56,40 @@ public class AppPaneFactory {
             case FOOD_PANE:
                 initPane(appPane, "Food");
                 appPane.topTextField = new TextField("Query");
+                appPane.addRemoveFoodButton = new Button("-/+");
+                appPane.addRemoveFoodButton.setOnAction(event-> { 
+                	Stage popUp = new Stage();
+                	popUp.setHeight(325.0);
+                	popUp.setWidth(325.0);
+                	popUp.setResizable(false);
+                	popUp.setTitle("Add/remove food");
+                	
+                	Label nameLabel = new Label("Name:");
+                	Label caloriesLabel = new Label("Calories:");
+                	Label fatLabel = new Label("Fat:");
+                	Label carbsLabel = new Label("Carbs:");
+                	Label fiberLabel = new Label("Fiber:");
+                	Label proteinLabel = new Label("Protein");
+                	
+                	TextField nameInput = new TextField();
+                	TextField caloriesInput = new TextField();
+                	TextField fatInput = new TextField();
+                	TextField carbsInput = new TextField();
+                	TextField fiberInput = new TextField();
+                	TextField proteinInput = new TextField();
+                	
+                	Button addRemove = new Button("Add/Remove");
+                	
+                	VBox root = new VBox();
+                	root.setPrefSize(325.0, 325.0);
+                	root.getChildren().addAll(nameLabel,nameInput,caloriesLabel,caloriesInput,
+                			fatLabel,fatInput,carbsLabel,carbsInput,fiberLabel,fiberInput,
+                			proteinLabel,proteinInput,addRemove);
+                	
+                	Scene scene = new Scene(root);
+                	popUp.setScene(scene);
+                	popUp.show();
+                });
                 break;
 
             case INFO_PANE:

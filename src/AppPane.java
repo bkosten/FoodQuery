@@ -29,7 +29,8 @@ public class AppPane extends VBox {
     public VBox contentVBox;
     public ObservableList<String> content;
     public ObservableList<Label> contentLabels;
-
+    public Button addRemoveFoodButton;
+    
     //info pane
     public CategoryAxis xAxis;
     public NumberAxis yAxis;
