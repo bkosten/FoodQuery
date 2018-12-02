@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
 
@@ -29,7 +30,7 @@ public class AppPane extends VBox {
     public VBox contentVBox;
     public ObservableList<String> content;
     public ObservableList<Label> contentLabels;
-    public Button addRemoveFoodButton;
+    public HBox addRemoveFood;
     
     //info pane
     public CategoryAxis xAxis;

@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.lang.reflect.Field;
@@ -56,13 +57,15 @@ public class AppPaneFactory {
             case FOOD_PANE:
                 initPane(appPane, "Food");
                 appPane.topTextField = new TextField("Query");
-                appPane.addRemoveFoodButton = new Button("-/+");
-                appPane.addRemoveFoodButton.setOnAction(event-> { 
+                appPane.addRemoveFood = new HBox();
+                Button addFoodButton = new Button("+");
+                appPane.addRemoveFood.getChildren().add(addFoodButton);
+                addFoodButton.setOnAction(event-> { 
                 	Stage popUp = new Stage();
                 	popUp.setHeight(325.0);
                 	popUp.setWidth(325.0);
                 	popUp.setResizable(false);
-                	popUp.setTitle("Add/remove food");
+                	popUp.setTitle("Add food");
                 	
                 	Label nameLabel = new Label("Name:");
                 	Label caloriesLabel = new Label("Calories:");
@@ -78,18 +81,48 @@ public class AppPaneFactory {
                 	TextField fiberInput = new TextField();
                 	TextField proteinInput = new TextField();
                 	
-                	Button addRemove = new Button("Add/Remove");
+                	Button addButton = new Button("Add");
                 	
                 	VBox root = new VBox();
                 	root.setPrefSize(325.0, 325.0);
                 	root.getChildren().addAll(nameLabel,nameInput,caloriesLabel,caloriesInput,
                 			fatLabel,fatInput,carbsLabel,carbsInput,fiberLabel,fiberInput,
-                			proteinLabel,proteinInput,addRemove);
+                			proteinLabel,proteinInput,addButton);
                 	
                 	Scene scene = new Scene(root);
                 	popUp.setScene(scene);
                 	popUp.show();
                 });
+                
+                Button removeFoodButton = new Button("-");
+                appPane.addRemoveFood.getChildren().add(removeFoodButton);
+                removeFoodButton.setOnAction(event-> { 
+                	Stage popUp = new Stage();
+                	popUp.setHeight(325.0);
+                	popUp.setWidth(325.0);
+                	popUp.setResizable(false);
+                	popUp.setTitle("Remove food");
+                	
+                	Label nameLabel = new Label("Name:");
+                	Text or = new Text("\nOR\n");
+                	Label idLabel = new Label("ID:");
+                	
+                	
+                	TextField nameInput = new TextField();
+                	TextField idInput = new TextField();
+                	
+                	Button removeButton = new Button("Remove");
+                	
+                	VBox root = new VBox();
+                	root.setPrefSize(325.0, 325.0);
+                	root.getChildren().addAll(nameLabel,nameInput,or,idLabel,idInput,
+                			removeButton);
+                	
+                	Scene scene = new Scene(root);
+                	popUp.setScene(scene);
+                	popUp.show();
+                });
+                
                 break;
 
             case INFO_PANE:
