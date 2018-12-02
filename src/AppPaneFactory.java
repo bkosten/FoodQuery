@@ -67,9 +67,15 @@ public class AppPaneFactory {
                 //sets scroll bars
                 appPane.contentScrollPane.get().setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
                 appPane.contentScrollPane.get().setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
+                
+                //Button toward the button to add/remove foods
+                appPane.addRemoveFoodButton = Optional.of(new Button(("-/+")));
+                
+                //Add corresponding objects to the food pane
                 appPane.top.getChildren().addAll(appPane.topLabel, appPane.topTextField.get());
-                appPane.getChildren().addAll(appPane.top, appPane.contentScrollPane.get());
+                appPane.getChildren().addAll(appPane.top, appPane.contentScrollPane.get(),
+                		appPane.addRemoveFoodButton.get());
+                
                 break;
 
             case MEAL_PANE:
