@@ -47,9 +47,9 @@ public class Main extends Application
         AppPane mealPane = AppPaneFactory.createPane(PaneType.MEAL_PANE);
         AppPane infoPane = AppPaneFactory.createPane(PaneType.INFO_PANE);
 
-        foodPane.content.get().addAll("Food1", "Food2", "Food3", "Food4");
-        mealPane.content.get().addAll("Food5", "Food6", "Food7", "Food8");
-        foodPane.content.get().removeAll("Food1", "Food2");
+        foodPane.content.addAll("Food1", "Food2", "Food3", "Food4");
+        mealPane.content.addAll("Food5", "Food6", "Food7", "Food8");
+        foodPane.content.removeAll("Food1", "Food2");
         
         //adjusts widths of panes so food and meal pane take up half
         //and info pane takes up the other of the GUI

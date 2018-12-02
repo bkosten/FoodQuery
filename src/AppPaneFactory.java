@@ -1,6 +1,7 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -12,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,137 +23,141 @@ public class AppPaneFactory {
         AppPane appPane = new AppPane();
 
         switch (paneType) {
-            case FOOD_PANE:
-                appPane.top = new VBox();
-                appPane.topLabel = new Label("Query");
-                appPane.topTextField = Optional.of(new TextField());
-
-                appPane.contentScrollPane = Optional.of(new ScrollPane());
-
-                //init observable array list and set its onChanged()
-                appPane.content = Optional.of(FXCollections.observableArrayList());
-                appPane.contentLabels = Optional.of(FXCollections.observableArrayList());
-                appPane.content.get().addListener(new ListChangeListener<String>() {
-                    @Override
-                    public void onChanged(Change<? extends String> c) {
-                        c.next();       //wont work without this idk why...
-
-                        if (c.wasAdded()) {
-                            System.out.println("Added");
-                            for (String name : c.getList()) {
-                                Label label = new Label(name);
-                                appPane.contentLabels.get().add(label);
-                                appPane.contentVBox.get().getChildren().add(label);
-                            }
-                        }
-
-                        if (c.wasRemoved()) {
-                            System.out.println("Removed");
-                            for (String name : c.getList()) {
-                                //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
-                                Label label = appPane.contentLabels.get().stream().filter((l) -> l.getText() == name).findFirst().get();
-                                appPane.contentVBox.get().getChildren().remove(label);
-                            }
-                        }
-                    }
-                });
-
-
-                //puts the labels into appPane.contentVBox
-                appPane.contentVBox = Optional.of(new VBox());
-                for(Label spFoodLabel : appPane.contentLabels.get()) {
-                    appPane.contentVBox.get().getChildren().add(spFoodLabel);
-                }
-                appPane.contentScrollPane.get().setContent(appPane.contentVBox.get());
-
-                //sets scroll bars
-                appPane.contentScrollPane.get().setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-                appPane.contentScrollPane.get().setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-                appPane.top.getChildren().addAll(appPane.topLabel, appPane.topTextField.get());
-                appPane.getChildren().addAll(appPane.top, appPane.contentScrollPane.get());
+            case INFO_PANE:
+                appPane = buildInfoPane(appPane);
+                appPane = consolidate(appPane);
                 break;
 
-            case MEAL_PANE:
-                appPane.top = new VBox();
-                appPane.topLabel = new Label("Meal");
-                appPane.contentScrollPane = Optional.of(new ScrollPane());
+            default:
+                appPane = buildPane(appPane, paneType);
+                appPane = consolidate(appPane);
+                break;
+        }
 
-                //init observable array list and set its onChanged() Listener
-                appPane.content = Optional.of(FXCollections.observableArrayList());
-                appPane.contentLabels = Optional.of(FXCollections.observableArrayList());
-                appPane.content.get().addListener(new ListChangeListener<String>() {
-                    @Override
-                    public void onChanged(Change<? extends String> c) {
-                        c.next();       //wont work without this idk why...
-
-                        if (c.wasAdded()) {
-                            System.out.println("Added");
-                            for (String name : c.getList()) {
-                                Label label = new Label(name);
-                                appPane.contentLabels.get().add(label);
-                                appPane.contentVBox.get().getChildren().add(label);
-                            }
-                        }
-
-                        if (c.wasRemoved()) {
-                            System.out.println("Removed");
-                            for (String name : c.getList()) {
-                                //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
-                                Label label = appPane.contentLabels.get().stream().filter((l) -> l.getText() == name).findFirst().get();
-                                appPane.contentVBox.get().getChildren().remove(label);
-                            }
-                        }
-                    }
-                });
-
-                //puts the labels into appPane.contentVBox
-                appPane.contentVBox = Optional.of(new VBox());
-                for(Label spMealLabel : appPane.contentLabels.get()) {
-                    appPane.contentVBox.get().getChildren().add(spMealLabel);
-                }
-                appPane.contentScrollPane.get().setContent(appPane.contentVBox.get());
-
-                //sets scroll bars
-                appPane.contentScrollPane.get().setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-                appPane.contentScrollPane.get().setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        return appPane;
+    }
 
 
-                appPane.top.getChildren().addAll(appPane.topLabel);
-                appPane.getChildren().addAll(appPane.top, appPane.contentScrollPane.get());
+
+    private static AppPane initPane(AppPane appPane, String labelString) {
+        appPane.top = new VBox();
+        appPane.topLabel = new Label(labelString);
+
+        return appPane;
+    }
+
+    public static AppPane buildPane(AppPane appPane, PaneType paneType) {
+        switch (paneType) {
+            case FOOD_PANE:
+                initPane(appPane, "Food");
+                appPane.topTextField = new TextField("Query");
                 break;
 
             case INFO_PANE:
-                appPane.top = new VBox();
-                appPane.topLabel = new Label("Info");
+                initPane(appPane, "Meal");
+                break;
 
-                //init bar chart
-                appPane.xAxis = Optional.of(new CategoryAxis());
-                appPane.yAxis = Optional.of(new NumberAxis());
-                appPane.bc = Optional.of(
-                        new BarChart<String,Number>(appPane.xAxis.get(),appPane.yAxis.get()));
-
-                appPane.bc.get().setTitle("Meal Summary");
-                appPane.xAxis.get().setLabel("Nutrient");
-                appPane.yAxis.get().setLabel("Percentage");
-
-                appPane.image = Optional.of(new Image("/nutritional_facts.png", true));
-                appPane.imageView = Optional.of(new ImageView(appPane.image.get()));
-
-                appPane.imageView.get().setPreserveRatio(true);
-                appPane.imageView.get().setSmooth(true);
-                appPane.imageView.get().setCache(true);
-
-                //set preferred size of image
-                appPane.imageView.get().setFitHeight(Main.GUI_SIZE/2);
-                appPane.imageView.get().setFitWidth(Main.GUI_SIZE/2);
-
-                appPane.infoButton = Optional.of(new Button(("Analyze")));
-
-                appPane.top.getChildren().addAll(appPane.topLabel);
-                appPane.getChildren().addAll(appPane.top, appPane.bc.get(), appPane.imageView.get(), appPane.infoButton.get());
+            default:
+                initPane(appPane, "Food");
+                break;
         }
 
+        appPane.contentScrollPane = new ScrollPane();
+
+        //init observable array list and set its onChanged()
+        appPane.content = FXCollections.observableArrayList();
+        appPane.contentLabels = FXCollections.observableArrayList();
+        appPane.content.addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                c.next();       //wont work without this idk why...
+
+                if (c.wasAdded()) {
+                    System.out.println("Added");
+                    for (String name : c.getList()) {
+                        Label label = new Label(name);
+                        appPane.contentLabels.add(label);
+                        appPane.contentVBox.getChildren().add(label);
+                    }
+                }
+
+                if (c.wasRemoved()) {
+                    System.out.println("Removed");
+                    for (String name : c.getList()) {
+                        //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
+                        Label label = appPane.contentLabels.stream().filter((l) -> l.getText() == name).findFirst().get();
+                        appPane.contentVBox.getChildren().remove(label);
+                    }
+                }
+            }
+        });
+
+
+        //puts the labels into appPane.contentVBox
+        appPane.contentVBox = new VBox();
+        for(Label spFoodLabel : appPane.contentLabels) {
+            appPane.contentVBox.getChildren().add(spFoodLabel);
+        }
+        appPane.contentScrollPane.setContent(appPane.contentVBox);
+
+        //sets scroll bars
+        appPane.contentScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        appPane.contentScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        return appPane;
+    }
+
+    public static AppPane buildInfoPane(AppPane appPane) {
+        appPane.top = new VBox();
+        appPane.topLabel = new Label("Info");
+
+        //init bar chart
+        appPane.xAxis = new CategoryAxis();
+        appPane.yAxis = new NumberAxis();
+        appPane.bc = new BarChart<String,Number>(appPane.xAxis, appPane.yAxis);
+
+        appPane.bc.setTitle("Meal Summary");
+        appPane.xAxis.setLabel("Nutrient");
+        appPane.yAxis.setLabel("Percentage");
+
+        appPane.image = new Image("/nutritional_facts.png", true);
+        appPane.imageView = new ImageView(appPane.image);
+
+        appPane.imageView.setPreserveRatio(true);
+        appPane.imageView.setSmooth(true);
+        appPane.imageView.setCache(true);
+
+        //set preferred size of image
+        appPane.imageView.setFitHeight(Main.GUI_SIZE/2);
+        appPane.imageView.setFitWidth(Main.GUI_SIZE/2);
+
+        appPane.infoButton = new Button(("Analyze"));
+
+        return appPane;
+    }
+
+    public static AppPane consolidate(AppPane appPane) {
+        for (Field field : appPane.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+
+            try {
+                Object o = field.get(appPane);
+                if (o == null) continue;
+
+                appPane.getChildren().add((Node) o);
+            }
+
+            //this is a little bit of a hack but idk how else to do it
+            //im using this catch ex ception to do a little bit of logic handling, basically
+            //if Object o is not of type Node then continue the for loop
+            catch (ClassCastException e) {
+                continue;
+            }
+
+            catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         return appPane;
     }
 }
