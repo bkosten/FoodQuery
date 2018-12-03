@@ -2,34 +2,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-
-
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
-import javafx.collections.ObservableList;
-import javafx.collections.ListChangeListener;
-
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
 
 public class Main extends Application
 {
 	//GUI Size
-	public static final float GUI_SIZE = 500;
+	public static final float GUI_WIDTH = 640;
+	public static final float GUI_HEIGHT = 480;
 	
     public static void main(String[] args)
     {
@@ -40,7 +18,7 @@ public class Main extends Application
     public void start(Stage stage)
     {
         BorderPane root = new BorderPane();
-        root.setPrefSize(GUI_SIZE, GUI_SIZE);
+        root.setPrefSize(GUI_WIDTH, GUI_HEIGHT);
 
         // Split the application up into three panes
         AppPane foodPane = AppPaneFactory.createPane(PaneType.FOOD_PANE);
@@ -53,9 +31,9 @@ public class Main extends Application
         
         //adjusts widths of panes so food and meal pane take up half
         //and info pane takes up the other of the GUI
-        foodPane.setPrefWidth(GUI_SIZE/4);
-        mealPane.setPrefWidth(GUI_SIZE/4);
-        infoPane.setPrefWidth(GUI_SIZE/2);
+        foodPane.setPrefWidth(GUI_WIDTH/4);
+        mealPane.setPrefWidth(GUI_WIDTH/4);
+        infoPane.setPrefWidth(GUI_WIDTH/2);
 
         // Set the alignment of the panes
         root.setLeft(foodPane);
@@ -64,6 +42,7 @@ public class Main extends Application
 
         //init the application
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("styles.css");
         stage.setScene(scene);
         stage.setTitle("Food Query");
 

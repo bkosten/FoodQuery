@@ -1,0 +1,20 @@
+@font-face {
+    font-family: Montserrat;
+    src: url("/Montserrat-Light.ttf");
+}
+
+#top {
+    -fx-padding: 10;
+    -fx-border-color: #222222;
+    -fx-border-width: 0 0 1 0;
+}
+
+#topLabel {
+    -fx-font-family: Montserrat;
+    -fx-font-size: 20;
+}
+
+#pane {
+    -fx-border-color: #FDFDFD;
+    -fx-border-width: 3;
+}
