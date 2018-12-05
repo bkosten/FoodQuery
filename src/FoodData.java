@@ -1,11 +1,15 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 /**
- * This class represents the backend for managing all 
+ * This class represents the back-end for managing all 
  * the operations associated with FoodItems
  * 
- * @author sapan (sapan@cs.wisc.edu)
+ * @authors Jack Mallmann, John Swanke, Ben Kosten, Diquan Xian
  */
 public class FoodData implements FoodDataADT<FoodItem> {
     
@@ -17,20 +21,38 @@ public class FoodData implements FoodDataADT<FoodItem> {
     
     
     /**
-     * Public constructor
+     * Public constructor: initialize private fields.
      */
     public FoodData() {
-        // TODO : Complete
+        foodItemList = new ArrayList<FoodItem>();
+        indexes = new HashMap<String,BPTree<Double,FoodItem>>();
     }
     
     
     /*
-     * (non-Javadoc)
-     * @see skeleton.FoodDataADT#loadFoodItems(java.lang.String)
+     * Load food from a .csv file. Form for each food/line:
+     * <id>,<name>,<nutrient>,<value>,<nutrient>,<value>
+     * 
+     * Add each food/line to both the foodItemList and add to HashMap.
+     * 
+     * @param filePath path of data file 
      */
     @Override
     public void loadFoodItems(String filePath) {
-        // TODO : Complete
+        /* First, import file's contents */
+    	File file = new File(filePath);
+    	Scanner sc = null;
+    	try {
+    		sc = new Scanner(file);
+    	}
+    	catch(FileNotFoundException e) { 
+    		e.printStackTrace(); 
+       	}
+    	
+    	/* Next, parse each line and add to foodItemList and indexes */
+    	while (sc.hasNextLine()) {
+    		
+    	}
     }
 
     /*
