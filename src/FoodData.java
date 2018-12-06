@@ -26,8 +26,12 @@ public class FoodData implements FoodDataADT<FoodItem> {
     public FoodData() {
         foodItemList = new ArrayList<FoodItem>();
         indexes = new HashMap<String,BPTree<Double,FoodItem>>();
+        
         indexes.put("fat", new BPTree<Double,FoodItem>(2)); //BRANCHING FACTOR IS SUBJECT TO CHANGE
-        indexes.put("fiber",new BPTree<Double,FoodItem>(2));
+        indexes.put("fiber", new BPTree<Double,FoodItem>(2));
+        indexes.put("calories", new BPTree<Double,FoodItem>(2));
+        indexes.put("carbohydrate", new BPTree<Double,FoodItem>(2));
+        indexes.put("protein", new BPTree<Double,FoodItem>(2));
     }
     
     
@@ -63,7 +67,11 @@ public class FoodData implements FoodDataADT<FoodItem> {
     		}
     		/* Add new FoodItem to foodItemList and to B+ trees in indexes */
     		foodItemList.add(newFood);
-    		
+    		indexes.get("fat").insert(newFood.getNutrientValue("fat"), newFood);
+    		indexes.get("carbohydrate").insert(newFood.getNutrientValue("carbohydrate"), newFood);
+    		indexes.get("protein").insert(newFood.getNutrientValue("protein"), newFood);
+    		indexes.get("fiber").insert(newFood.getNutrientValue("fiber"), newFood);
+    		indexes.get("calories").insert(newFood.getNutrientValue("calories"), newFood);
     	}
     }
 
