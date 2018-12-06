@@ -93,7 +93,16 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public void addFoodItem(FoodItem foodItem) {
-        // TODO : Complete
+        BPTree<Double, FoodItem> currNutrient;
+        String[] nutrientNames = {"fat", "fiber", "calories", "carbohydrate", "protein"};
+    	//add foodItem to the foodItemList
+    	foodItemList.add(foodItem);
+    	//add the foodItem to the nutrient trees
+    	for(int i = 0; i < 5; i++) {
+    		currNutrient = indexes.get(nutrientNames[i]);
+    		currNutrient.insert(foodItem.getNutrientValue(nutrientNames[i]), foodItem);
+    	}
+    	
     }
 
     /*
@@ -102,8 +111,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public List<FoodItem> getAllFoodItems() {
-        // TODO : Complete
-        return null;
+        return foodItemList;
     }
 
     @Override
