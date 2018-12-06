@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,9 +115,23 @@ public class FoodData implements FoodDataADT<FoodItem> {
         return null;
     }
 
+    /**
+     * Save the list of food items in ascending order by name.
+     * @param fileName: the name of the file to which the food items will be saved 
+     */
     @Override
     public void saveFoodItems(String filename) {
-
+    	/* Prepare the necessary I/O objects */
+    	File file = new File(filename);
+    	PrintWriter writer = null;
+    	try { 
+    		writer = new PrintWriter(filename);
+    	} 
+    	catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	/* Sort foodItems list to have it in ascending order by name */
+    	
     }
-
 }
