@@ -101,13 +101,63 @@ public class FoodData implements FoodDataADT<FoodItem> {
     }
 
     /*
-     * (non-Javadoc)
-     * @see skeleton.FoodDataADT#filterByNutrients(java.util.List)
+     * Gets all the food items that fulfill ALL the provided rules
+     *
+     * Format of a rule:
+     *     "<nutrient> <comparator> <value>"
+     *     
+     * @param rules list of rules
+     * @return list of filtered food items; if no food item matched, return empty list
      */
     @Override
     public List<FoodItem> filterByNutrients(List<String> rules) {
-        // TODO : Complete
-        return null;
+    	
+    	List<FoodItem> ruleMatchingFoods = new ArrayList<FoodItem>();
+    	List<FoodItem> compareMatchingFoods = new ArrayList<FoodItem>();
+    	List<FoodItem> finalMatchingFoods = new ArrayList<FoodItem>();
+    	
+    	BPTree<Double, FoodItem> currNutrientTree;
+    	
+    	String[] currRule;
+    	String currNutrient;
+    	String currComparator;
+    	Double currValue;
+    	
+    	String currID;
+    	
+    	for(int i = 0; i < rules.size(); i++) {
+    		//parse the current rule
+    		currRule = rules.get(i).split(" ");
+    		currNutrient = currRule[0].toLowerCase();
+    		currComparator = currRule[1];
+    		currValue = Double.valueOf(currRule[2]);
+    		
+    		//access correct nutrient tree
+    		currNutrientTree = indexes.get(currNutrient);
+    		
+    		//get the values that match this rule
+    		ruleMatchingFoods = currNutrientTree.rangeSearch(currValue, currComparator);
+    		
+    		//when 1st rule is applied or none of the rules have retrieved matching foods
+    		if(finalMatchingFoods.isEmpty()) {
+    			finalMatchingFoods = ruleMatchingFoods;
+    		}
+    		//compares the finalMatchingFoods with the current ruleMatchingFoods
+    		else {
+    			for(int k = 0; k < ruleMatchingFoods.size(); k++) {
+    				for(int j = 0; j < finalMatchingFoods.size(); j++) {
+    					currID = finalMatchingFoods.get(j).getID();
+    					//adds food from the current rule to a temp list if it matches a final food 
+    					if(currID.equals(ruleMatchingFoods.get(k).getID())) {
+    						compareMatchingFoods.add(ruleMatchingFoods.get(k));
+    					}
+    				}
+    			}
+    			//replaces the old final matching foods with an updated list
+    			finalMatchingFoods = compareMatchingFoods;
+    		}
+    	}
+        return finalMatchingFoods;
     }
 
     /*
