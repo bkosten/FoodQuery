@@ -1,15 +1,19 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 /**
- * This class represents the backend for managing all 
+ * This class represents the back-end for managing all 
  * the operations associated with FoodItems
  * 
- * @author sapan (sapan@cs.wisc.edu)
+ * @authors Jack Mallmann, John Swanke, Ben Kosten, Diquan Xian
  */
 public class FoodData implements FoodDataADT<FoodItem> {
-    
-    // List of all the food items.
+    	
+	// List of all the food items.
     private List<FoodItem> foodItemList;
 
     // Map of nutrients and their corresponding index
@@ -17,20 +21,50 @@ public class FoodData implements FoodDataADT<FoodItem> {
     
     
     /**
-     * Public constructor
+     * Public constructor: initialize private fields. Prepare indexes.
      */
     public FoodData() {
-        // TODO : Complete
+        foodItemList = new ArrayList<FoodItem>();
+        indexes = new HashMap<String,BPTree<Double,FoodItem>>();
+        indexes.put("fat", new BPTree<Double,FoodItem>(2)); //BRANCHING FACTOR IS SUBJECT TO CHANGE
+        indexes.put("fiber",new BPTree<Double,FoodItem>(2));
     }
     
     
     /*
-     * (non-Javadoc)
-     * @see skeleton.FoodDataADT#loadFoodItems(java.lang.String)
+     * Load food from a .csv file. Form for each food/line:
+     * <id>,<name>,<nutrient>,<value>,<nutrient>,<value>
+     * 
+     * Add each food/line to both the foodItemList and add to HashMap.
+     * 
+     * @param filePath path of data file 
      */
     @Override
     public void loadFoodItems(String filePath) {
-        // TODO : Complete
+        /* First, import file's contents */
+    	File file = new File(filePath);
+    	Scanner sc = null;
+    	try {
+    		sc = new Scanner(file);
+    	}
+    	catch(FileNotFoundException e) { 
+    		e.printStackTrace(); 
+       	}
+    	
+    	/* Next, parse each line and add to foodItemList and indexes */
+    	while (sc.hasNextLine()) {
+    		String line = sc.nextLine();
+    		String[] properties = line.split(",");
+    		if (properties.length == 0) break; //end of data
+    		/* Prepare a FoodItem object to be added */
+    		FoodItem newFood = new FoodItem(properties[0],properties[1]);
+    		for (int i = 2; i <= 11; i = i + 2) {
+    			newFood.addNutrient(properties[i], Double.parseDouble(properties[i+1]));
+    		}
+    		/* Add new FoodItem to foodItemList and to B+ trees in indexes */
+    		foodItemList.add(newFood);
+    		
+    	}
     }
 
     /*
