@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ import java.util.Scanner;
  * @authors Jack Mallmann, John Swanke, Ben Kosten, Diquan Xian
  */
 public class FoodData implements FoodDataADT<FoodItem> {
-    	
+
 	// List of all the food items.
     private List<FoodItem> foodItemList;
 
@@ -140,6 +141,20 @@ public class FoodData implements FoodDataADT<FoodItem> {
     	}
     	
     	/* Sort foodItems list to have it in ascending order by name */
+    	foodItemList.sort((foodOne,foodTwo) -> {return foodOne.getName().compareTo(foodTwo.getName());});
     	
+    	/* Iterate through foods. Print them in the order as the sample .csv file*/
+    	for (int i = 0; i < foodItemList.size(); ++i) {
+    		FoodItem food = foodItemList.get(i);
+    		writer.print(food.getID() + ",");
+    		writer.print(food.getName() + ",");
+    		writer.print("calories," + Double.toString(food.getNutrientValue("calories")) + ",");
+    		writer.print("fat," + Double.toString(food.getNutrientValue("fat")) + ",");
+    		writer.print("carbohydrate," + 
+    				Double.toString(food.getNutrientValue("carbohydrate")) + ",");
+    		writer.print("fiber," + Double.toString(food.getNutrientValue("fiber")) + ",");
+    		writer.print("protein," + Double.toString(food.getNutrientValue("protein")) + "");
+    	}
+    	writer.flush();
     }
 }
