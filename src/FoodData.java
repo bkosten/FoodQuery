@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @authors Jack Mallmann, John Swanke, Ben Kosten, Diquan Xian
  */
 public class FoodData implements FoodDataADT<FoodItem> {
-    
+    	
 	// List of all the food items.
     private List<FoodItem> foodItemList;
 
@@ -21,11 +21,13 @@ public class FoodData implements FoodDataADT<FoodItem> {
     
     
     /**
-     * Public constructor: initialize private fields.
+     * Public constructor: initialize private fields. Prepare indexes.
      */
     public FoodData() {
         foodItemList = new ArrayList<FoodItem>();
         indexes = new HashMap<String,BPTree<Double,FoodItem>>();
+        indexes.put("fat", new BPTree<Double,FoodItem>(2)); //BRANCHING FACTOR IS SUBJECT TO CHANGE
+        indexes.put("fiber",new BPTree<Double,FoodItem>(2));
     }
     
     
@@ -59,8 +61,9 @@ public class FoodData implements FoodDataADT<FoodItem> {
     		for (int i = 2; i <= 11; i = i + 2) {
     			newFood.addNutrient(properties[i], Double.parseDouble(properties[i+1]));
     		}
-    		/* Add new FoodItem to foodItemList */
+    		/* Add new FoodItem to foodItemList and to B+ trees in indexes */
     		foodItemList.add(newFood);
+    		
     	}
     }
 
