@@ -77,13 +77,27 @@ public class FoodData implements FoodDataADT<FoodItem> {
     }
 
     /*
-     * (non-Javadoc)
-     * @see skeleton.FoodDataADT#filterByName(java.lang.String)
+     * Gets all the food items that have name containing the substring.
+     * CASE-INSENSITIVE
+     * 
+     * @param substring substring to be searched
+     * @return list of filtered food items; if no food item matched, return empty list
      */
     @Override
     public List<FoodItem> filterByName(String substring) {
-        // TODO : Complete
-        return null;
+        String foodName;
+        String lowerCaseSubstring = substring.toLowerCase();
+        List<FoodItem> matchingFoods = new ArrayList<FoodItem>();
+        
+        //loops through the foodItemList and adds any foods that
+        //contain the substring in their name to matchingFoods
+        for(int i = 0; i< foodItemList.size(); i++) {
+        	foodName = foodItemList.get(i).getName().toLowerCase();
+        	if(foodName.contains(lowerCaseSubstring)) {
+        		matchingFoods.add(foodItemList.get(i));
+        	}
+        }
+        return matchingFoods;
     }
 
     /*
