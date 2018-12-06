@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class FoodData implements FoodDataADT<FoodItem> {
     
-    // List of all the food items.
+	// List of all the food items.
     private List<FoodItem> foodItemList;
 
     // Map of nutrients and their corresponding index
@@ -51,7 +51,16 @@ public class FoodData implements FoodDataADT<FoodItem> {
     	
     	/* Next, parse each line and add to foodItemList and indexes */
     	while (sc.hasNextLine()) {
-    		
+    		String line = sc.nextLine();
+    		String[] properties = line.split(",");
+    		if (properties.length == 0) break; //end of data
+    		/* Prepare a FoodItem object to be added */
+    		FoodItem newFood = new FoodItem(properties[0],properties[1]);
+    		for (int i = 2; i <= 11; i = i + 2) {
+    			newFood.addNutrient(properties[i], Double.parseDouble(properties[i+1]));
+    		}
+    		/* Add new FoodItem to foodItemList */
+    		foodItemList.add(newFood);
     	}
     }
 
