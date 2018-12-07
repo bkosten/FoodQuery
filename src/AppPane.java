@@ -26,12 +26,12 @@ public class AppPane extends VBox {
     public TextField topTextField;
     
     //FoodData object
-    public FoodData foodDataBase;
+    
 
     //food / meal pane
     public ScrollPane contentScrollPane;
     public VBox contentVBox;
-    public ObservableList<String> content;
+    public ObservableList<FoodItem> content;
     public ObservableList<Label> contentLabels;
     public HBox addRemoveFood;
     

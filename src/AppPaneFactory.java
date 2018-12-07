@@ -70,15 +70,15 @@ public class AppPaneFactory {
         //init observable array list and set its onChanged()
         appPane.content = FXCollections.observableArrayList();
         appPane.contentLabels = FXCollections.observableArrayList();
-        appPane.content.addListener(new ListChangeListener<String>() {
+        appPane.content.addListener(new ListChangeListener<FoodItem>() {
             @Override
-            public void onChanged(Change<? extends String> c) {
+            public void onChanged(Change<? extends FoodItem> c) {
                 c.next();       //wont work without this idk why...
 
                 if (c.wasAdded()) {
-                    System.out.println("Added");
-                    for (String name : c.getList()) {
-                        Label label = new Label(name);
+                    //System.out.println("Added");
+                    for (FoodItem foodItem : c.getList()) {
+                        Label label = new Label(foodItem.getName());
                         appPane.contentLabels.add(label);
                         appPane.contentVBox.getChildren().add(label);
                     }
@@ -86,9 +86,9 @@ public class AppPaneFactory {
 
                 if (c.wasRemoved()) {
                     System.out.println("Removed");
-                    for (String name : c.getList()) {
+                    for (FoodItem foodItem : c.getList()) {
                         //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
-                        Label label = appPane.contentLabels.stream().filter((l) -> l.getText() == name).findFirst().get();
+                        Label label = appPane.contentLabels.stream().filter((l) -> l.getText() == foodItem.getName()).findFirst().get();
                         appPane.contentVBox.getChildren().remove(label);
                     }
                 }
@@ -166,14 +166,15 @@ public class AppPaneFactory {
 
             Button addButton = new Button("Add");
             addButton.setOnAction(add -> {
-            	FoodItem newFood = new FoodItem(nameInput.getText(), "asdfasdfasdfasdf");
+            	FoodItem newFood = new FoodItem("randomidname", nameInput.getText());
             	newFood.addNutrient("calories" , Double.valueOf(caloriesInput.getText()));
             	newFood.addNutrient("fat" , Double.valueOf(fatInput.getText()));
             	newFood.addNutrient("carbohydrate" , Double.valueOf(carbsInput.getText()));
             	newFood.addNutrient("fiber" , Double.valueOf(fiberInput.getText()));
             	newFood.addNutrient("protein" , Double.valueOf(proteinInput.getText()));
             	
-            	
+            	Main.foodDataBase.addFoodItem(newFood);
+            	popUp.close();
             });
 
             VBox root = new VBox();
