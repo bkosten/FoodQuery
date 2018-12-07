@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
 
 public class AppPaneFactory {
@@ -193,10 +194,12 @@ public class AppPaneFactory {
             			fiberInput.getText().length() == 0 || proteinInput.getText().length() == 0)
             		return; 
             	
-            	System.out.print(nameInput.toString());
+            	/* If user input is proper, then check if food is a duplicate. Don't add if so. */
+            	if (Main.foodDataBase.filterByName(nameInput.getText()).size() != 0) return;
             	
-            	
-            	FoodItem newFood = new FoodItem("randomidname", nameInput.getText());
+            	/* User input is proper and food isn't a duplicate. Now prepare unique ID. */
+            	String newID = generateID();
+            	FoodItem newFood = new FoodItem(newID, nameInput.getText());
             	newFood.addNutrient("calories" , Double.valueOf(caloriesInput.getText()));
             	newFood.addNutrient("fat" , Double.valueOf(fatInput.getText()));
             	newFood.addNutrient("carbohydrate" , Double.valueOf(carbsInput.getText()));
@@ -249,7 +252,34 @@ public class AppPaneFactory {
 
         return appPane;
     }
-
+    
+    /**
+     * Private helper method intended to generate an ID that is unique (i.e., an ID
+     * that no other food item in FoodData has.
+     * @return a unique ID (length is 24 characters)
+     */
+    private static String generateID() {
+    	StringBuilder sb = null;
+    	String id = null;
+    	while (true) { //loop until we generate a unique id
+    		sb = new StringBuilder();
+    		String alphabet = "abcdefghijklmnopqrstuvwxyzZ1234567890";
+        	Random r = new Random();
+        	while (sb.length() < 24) { //keep adding random character until desired length
+        		int index = (int) (r.nextFloat() * alphabet.length());
+        		sb.append(alphabet.charAt(index));
+        	}
+        	id = sb.toString();
+        	for (int i = 0; i < Main.foodDataBase.getAllFoodItems().size(); ++i) { //check ID's
+        		/* If it is a duplicate, generate a new ID */
+        		if (id.equals(Main.foodDataBase.getAllFoodItems().get(i).getName())) continue;
+        	}
+        	break; //break the loop, since the ID we generated didn't match any of the existing
+    	}
+        
+        return id;
+    }
+    
     public static AppPane consolidate(AppPane appPane) {
         appPane.top.getChildren().add(appPane.topLabel);
 
