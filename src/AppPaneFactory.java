@@ -165,6 +165,16 @@ public class AppPaneFactory {
             TextField proteinInput = new TextField();
 
             Button addButton = new Button("Add");
+            addButton.setOnAction(add -> {
+            	FoodItem newFood = new FoodItem(nameInput.getText(), "asdfasdfasdfasdf");
+            	newFood.addNutrient("calories" , Double.valueOf(caloriesInput.getText()));
+            	newFood.addNutrient("fat" , Double.valueOf(fatInput.getText()));
+            	newFood.addNutrient("carbohydrate" , Double.valueOf(carbsInput.getText()));
+            	newFood.addNutrient("fiber" , Double.valueOf(fiberInput.getText()));
+            	newFood.addNutrient("protein" , Double.valueOf(proteinInput.getText()));
+            	
+            	
+            });
 
             VBox root = new VBox();
             root.setPrefSize(325.0, 325.0);
