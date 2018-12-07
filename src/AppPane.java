@@ -24,6 +24,9 @@ public class AppPane extends VBox {
     public VBox top;
     public Label topLabel;
     public TextField topTextField;
+    
+    //FoodData object
+    public FoodData foodDataBase;
 
     //food / meal pane
     public ScrollPane contentScrollPane;
@@ -39,4 +42,6 @@ public class AppPane extends VBox {
     public Image image;
     public ImageView imageView;
     public Button infoButton;
+    
+    
 }
