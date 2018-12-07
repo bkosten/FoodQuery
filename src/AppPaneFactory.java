@@ -139,33 +139,63 @@ public class AppPaneFactory {
         return appPane;
     }
 
+    /**
+     * This static method creates the pop-ups to add or remove a food from the list shown
+     * on the info pane. Key tasks include:
+     * 	- Show a new window when the add ("+") or remove ("-") button is pushed.
+     * 	- Show text fields on these new windows for the user to enter food info (of which
+     * will be used to either add/remove food from the list of food shown).
+     * 	- The new window should also have a button to use user input in the text fields to 
+     * add remove/food a food from the observable list.
+     * 			**user input must be complete and in proper form to be used
+     * 	- When adding food, add to observable list and the underlying data structures
+     * 			**Two cases to consider: if duplicate food, you CAN add to observable list, but
+     * 				to the underlying data structure.
+     * 	- When removing food, keep food in the underlying data structures but just don't show it.
+     * 	- Close the window when button is pushed (and conditions are met).
+     * @param appPane
+     * @return
+     */
     public static AppPane buildPopup(AppPane appPane) {
-        appPane.addRemoveFood = new HBox();
+        appPane.addRemoveFood = new HBox(); //use HBox object to display add ("+") and remove ("-)
         Button addFoodButton = new Button("+");
         appPane.addRemoveFood.getChildren().add(addFoodButton);
-        addFoodButton.setOnAction(event-> {
-            Stage popUp = new Stage();
+        addFoodButton.setOnAction(event-> { //event listener for when add button is pushed
+            /* Create new Stage to constitute the window. Set its shape */
+        	Stage popUp = new Stage();
             popUp.setHeight(325.0);
             popUp.setWidth(325.0);
             popUp.setResizable(false);
             popUp.setTitle("Add food");
-
+            /* Add labels to indicate text fields */
             Label nameLabel = new Label("Name:");
             Label caloriesLabel = new Label("Calories:");
             Label fatLabel = new Label("Fat:");
             Label carbsLabel = new Label("Carbs:");
             Label fiberLabel = new Label("Fiber:");
             Label proteinLabel = new Label("Protein");
-
+            /* Text fields in which the user will enter input of a new food to add */
             TextField nameInput = new TextField();
             TextField caloriesInput = new TextField();
             TextField fatInput = new TextField();
             TextField carbsInput = new TextField();
             TextField fiberInput = new TextField();
             TextField proteinInput = new TextField();
-
+            /* The button that will use user input in the text fields to add new food */
             Button addButton = new Button("Add");
             addButton.setOnAction(add -> {
+            	/* Before we add the food, we should validate the user's input, check for
+            	 * duplicate foods and generate a unique ID (if it is a new food).	*/
+            	
+            	/* First, check for empty input. If empty, just have the button do nothing */
+            	if (nameInput.getText().length() == 0 || caloriesInput.getText().length() == 0 ||
+            			fatInput.getText().length() == 0 || carbsInput.getText().length() == 0 || 
+            			fiberInput.getText().length() == 0 || proteinInput.getText().length() == 0)
+            		return; 
+            	
+            	System.out.print(nameInput.toString());
+            	
+            	
             	FoodItem newFood = new FoodItem("randomidname", nameInput.getText());
             	newFood.addNutrient("calories" , Double.valueOf(caloriesInput.getText()));
             	newFood.addNutrient("fat" , Double.valueOf(fatInput.getText()));

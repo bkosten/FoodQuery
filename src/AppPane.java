@@ -23,10 +23,7 @@ public class AppPane extends VBox {
     //Head of each pane
     public VBox top;
     public Label topLabel;
-    public TextField topTextField;
-    
-    //FoodData object
-    
+    public TextField topTextField;    
 
     //food / meal pane
     public ScrollPane contentScrollPane;
