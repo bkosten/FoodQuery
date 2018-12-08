@@ -1,7 +1,13 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 public class Main extends Application
 {
@@ -45,7 +51,25 @@ public class Main extends Application
         root.setLeft(foodPane);
         root.setCenter(mealPane);
         root.setRight(infoPane);
-
+        
+        /* ---THIS SECTION IS FOR THE FILE/SAVE BAR AT THE TOP...WILL BE PUT ELSEWHERE --- */
+        MenuBar menuBar = new MenuBar();
+        // --- Menu File
+        Menu menuFile = new Menu("File");
+        MenuItem save = new MenuItem("Save");
+        MenuItem load = new MenuItem("Load");
+        save.setOnAction(click -> {
+        	Stage popup = new Stage();
+        	popup.setTitle("Test");
+        	popup.show();
+        });
+        menuFile.getItems().addAll(save,load);     
+        Menu menuHelp = new Menu("Help");
+        menuBar.getMenus().addAll(menuFile, menuHelp);
+        root.setTop(menuBar);
+        
+        /* ----------------------------------------------------------------------------------- */
+        
         //init the application
         Scene scene = new Scene(root);
         scene.getStylesheets().add("styles.css");
