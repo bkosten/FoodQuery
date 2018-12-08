@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.lang.reflect.Field;
 import java.util.Random;
+import java.util.concurrent.locks.Condition;
 
 
 public class AppPaneFactory {
@@ -155,7 +156,7 @@ public class AppPaneFactory {
      * 	- When removing food, keep food in the underlying data structures but just don't show it.
      * 	- Close the window when button is pushed (and conditions are met).
      * @param appPane
-     * @return
+     * @return appPane
      */
     public static AppPane buildPopup(AppPane appPane) {
         appPane.addRemoveFood = new HBox(); //use HBox object to display add ("+") and remove ("-)
@@ -197,7 +198,8 @@ public class AppPaneFactory {
             	/* If user input is proper, then check if food is a duplicate. Don't add if so. */
             	if (Main.foodDataBase.filterByName(nameInput.getText()).size() != 0) return;
             	
-            	/* User input is proper and food isn't a duplicate. Now prepare unique ID. */
+            	/* User input is proper and food isn't a duplicate. Now prepare unique ID and
+            	 * prepare a new FoodItem object. */
             	String newID = generateID();
             	FoodItem newFood = new FoodItem(newID, nameInput.getText());
             	newFood.addNutrient("calories" , Double.valueOf(caloriesInput.getText()));
@@ -239,6 +241,11 @@ public class AppPaneFactory {
             TextField idInput = new TextField();
 
             Button removeButton = new Button("Remove");
+            /* Add a listener for when the button is pressed. Remove from observable list. */
+            removeButton.setOnAction(click -> {
+            	//TODO: why doesn't this remove the food's name's label? It does it automatically with add?
+            	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
+            });
 
             VBox root = new VBox();
             root.setPrefSize(325.0, 325.0);
@@ -276,7 +283,6 @@ public class AppPaneFactory {
         	}
         	break; //break the loop, since the ID we generated didn't match any of the existing
     	}
-        
         return id;
     }
     
