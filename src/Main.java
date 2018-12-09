@@ -77,8 +77,95 @@ public class Main extends Application
         	loadWindow.setTitle("Load");
         	loadWindow.showOpenDialog(popup);
         });
-        menuFile.getItems().addAll(save,load);     
+	
+        // --- Menu Help
         Menu menuHelp = new Menu("Help");
+        MenuItem addFood = new MenuItem("Add food");
+        MenuItem removeFood = new MenuItem("Remove food");
+        MenuItem submitQuery = new MenuItem("Submit query");
+        MenuItem viewFood = new MenuItem("View food");
+        MenuItem analysis = new MenuItem("Analyze food");
+        
+        // A popup window displaying instructions to add new food
+        addFood.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		Stage popup = new Stage();
+            	popup.setTitle("How to add food?");
+            	Text text = new Text("Click '+' in the left pane, then enter name and nutrient information of food");
+            	text.setFont(new Font(40));
+            	Scene addFood = new Scene(new Group(text));
+            	popup.setScene(addFood);
+            	popup.show();
+        	}
+        	
+        });
+        
+        // A popup window displaying instructions to remove existing food
+        removeFood.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		Stage popup = new Stage();
+        		popup.setTitle("How to remove food?");
+        		Text text = new Text("Click '-' in the left pane, then select food to remove");
+        		text.setFont(new Font(40));
+        		Scene removeFood = new Scene(new Group(text));
+        		popup.setScene(removeFood);
+        		popup.show();
+        	}
+        	
+        });
+        
+        // A popup window displaying instructions to submit food query
+        submitQuery.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		Stage popup = new Stage();
+        		popup.setTitle("How to submit food query?");
+        		Text text = new Text("Enter food name in the textfield of the left pane to query for details");
+        		text.setFont(new Font(40));
+        		Scene submitQuery = new Scene(new Group(text));
+        		popup.setScene(submitQuery);
+        		popup.show();
+        	}
+        	
+        });
+        
+        // A popup window displaying instructions to view existing food
+        viewFood.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		Stage popup = new Stage();
+        		popup.setTitle("How to view food?");
+        		Text text = new Text("Scroll down to see added food in the central pane");
+        		text.setFont(new Font(40));
+        		Scene viewFood = new Scene(new Group(text));
+        		popup.setScene(viewFood);
+        		popup.show();
+        	}
+        	
+        });
+        
+        // A popup window displaying instructions to analyze nutrition information of food
+        analysis.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		Stage popup = new Stage();
+        		popup.setTitle("How to analyze food?");
+        		Text text = new Text("Click 'Analyze' button in the right pane to analyze nutrient values of food");
+        		text.setFont(new Font(40));
+        		Scene analysis = new Scene(new Group(text));
+        		popup.setScene(analysis);
+        		popup.show();
+        	}
+        });
+        
+        menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis);
         menuBar.getMenus().addAll(menuFile, menuHelp);
         root.setTop(menuBar);
         
