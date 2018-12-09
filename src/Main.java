@@ -1,3 +1,5 @@
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -66,6 +68,8 @@ public class Main extends Application
         	FileChooser saveWindow = new FileChooser();
         	saveWindow.setTitle("Save");
         	saveWindow.showOpenDialog(popup);
+        	File selectedFile = saveWindow.showOpenDialog(popup);
+        	Main.foodDataBase.saveFoodItems(selectedFile.getAbsolutePath());
         });
         load.setOnAction(click -> {
         	Stage popup = new Stage();
