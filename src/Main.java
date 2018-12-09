@@ -8,6 +8,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class Main extends Application
 {
@@ -60,7 +61,11 @@ public class Main extends Application
         MenuItem load = new MenuItem("Load");
         save.setOnAction(click -> {
         	Stage popup = new Stage();
-        	popup.setTitle("Test");
+        	VBox content = new VBox();
+        	Text sample = new Text("test");
+        	content.getChildren().add(sample);
+        	Scene scene = new Scene(content);
+        	popup.setScene(scene);
         	popup.show();
         });
         menuFile.getItems().addAll(save,load);     

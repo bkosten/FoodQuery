@@ -246,7 +246,6 @@ public class AppPaneFactory {
             Button removeButton = new Button("Remove");
             /* Add a listener for when the button is pressed. Remove from observable list. */
             removeButton.setOnAction(click -> {
-            	//TODO: why doesn't this remove the food's name's label? It does it automatically with add?
             	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
             });
 
