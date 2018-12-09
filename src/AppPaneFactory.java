@@ -246,7 +246,14 @@ public class AppPaneFactory {
             Button removeButton = new Button("Remove");
             /* Add a listener for when the button is pressed. Remove from observable list. */
             removeButton.setOnAction(click -> {
-            	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
+            	/* First, check for empty user input. Display error if so. */
+            	if (nameInput.getText().length() == 0 || idInput.getText().length() == 0) {
+            		Alert emptyFieldsError = new Alert
+            				(AlertType.ERROR,"Remove food error: missing field(s)");
+            		emptyFieldsError.show();
+            		return; //don't add anything
+            	}
+            	
             });
 
             VBox root = new VBox();
