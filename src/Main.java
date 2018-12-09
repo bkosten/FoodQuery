@@ -1,7 +1,9 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -61,12 +63,15 @@ public class Main extends Application
         MenuItem load = new MenuItem("Load");
         save.setOnAction(click -> {
         	Stage popup = new Stage();
-        	VBox content = new VBox();
-        	Text sample = new Text("test");
-        	content.getChildren().add(sample);
-        	Scene scene = new Scene(content);
-        	popup.setScene(scene);
-        	popup.show();
+        	FileChooser saveWindow = new FileChooser();
+        	saveWindow.setTitle("Save");
+        	saveWindow.showOpenDialog(popup);
+        });
+        load.setOnAction(click -> {
+        	Stage popup = new Stage();
+        	FileChooser loadWindow = new FileChooser();
+        	loadWindow.setTitle("Load");
+        	loadWindow.showOpenDialog(popup);
         });
         menuFile.getItems().addAll(save,load);     
         Menu menuHelp = new Menu("Help");
