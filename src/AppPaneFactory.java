@@ -5,10 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -189,17 +191,18 @@ public class AppPaneFactory {
             	/* Before we add the food, we should validate the user's input, check for
             	 * duplicate foods and generate a unique ID (if it is a new food).	*/
             	
-            	/* First, check for empty input. If empty, just have the button do nothing */
+            	/* First, check for empty input. If empty, just have the button pop-up alert. */
             	if (nameInput.getText().length() == 0 || caloriesInput.getText().length() == 0 ||
             			fatInput.getText().length() == 0 || carbsInput.getText().length() == 0 || 
-            			fiberInput.getText().length() == 0 || proteinInput.getText().length() == 0)
-            		return; 
+            			fiberInput.getText().length() == 0 || 
+            			proteinInput.getText().length() == 0) {
+            		Alert emptyFieldsError = new Alert
+            				(AlertType.ERROR,"Add food error: missing field(s)");
+            		emptyFieldsError.show();
+            		return; //don't add anything
+            	}
             	
-            	/* If user input is proper, then check if food is a duplicate. Don't add if so. */
-            	if (Main.foodDataBase.filterByName(nameInput.getText()).size() != 0) return;
-            	
-            	/* User input is proper and food isn't a duplicate. Now prepare unique ID and
-            	 * prepare a new FoodItem object. */
+            	/* User input is proper, prepare unique ID and prepare a new FoodItem object. */
             	String newID = generateID();
             	FoodItem newFood = new FoodItem(newID, nameInput.getText());
             	newFood.addNutrient("calories" , Double.valueOf(caloriesInput.getText()));
