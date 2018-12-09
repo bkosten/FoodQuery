@@ -81,7 +81,7 @@ public class AppPaneFactory {
 
                 if (c.wasAdded()) {
                     //System.out.println("Added");
-                    for (FoodItem foodItem : c.getList()) {
+                    for (FoodItem foodItem : c.getAddedSubList()) {
                         Label label = new Label(foodItem.getName());
                         appPane.contentLabels.add(label);
                         appPane.contentVBox.getChildren().add(label);
@@ -89,8 +89,8 @@ public class AppPaneFactory {
                 }
 
                 if (c.wasRemoved()) {
-                    System.out.println("Removed");
-                    for (FoodItem foodItem : c.getList()) {
+                    //System.out.println("Removed");
+                    for (FoodItem foodItem : c.getAddedSubList()) {
                         //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
                         Label label = appPane.contentLabels.stream().filter((l) -> l.getText() == foodItem.getName()).findFirst().get();
                         appPane.contentVBox.getChildren().remove(label);
