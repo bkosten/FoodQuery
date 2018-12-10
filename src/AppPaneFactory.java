@@ -12,6 +12,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -89,6 +90,7 @@ public class AppPaneFactory {
                     //System.out.println("Added");
                     for (FoodItem foodItem : c.getAddedSubList()) {
                         Label label = new Label(foodItem.getName());
+                        label.setOnMouseClicked(event->	Main.mealPane.content.add(foodItem));
                         appPane.contentLabels.add(label);
                         appPane.contentVBox.getChildren().add(label);
                     }
@@ -116,6 +118,8 @@ public class AppPaneFactory {
         //sets scroll bars
         appPane.contentScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         appPane.contentScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        
+        //Make the items in the food list capable to be interacted with
 
         return appPane;
     }

@@ -8,6 +8,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -32,6 +33,8 @@ public class AppPane extends VBox {
     public ObservableList<FoodItem> content;
     public ObservableList<Label> contentLabels;
     public HBox addRemoveFood;
+    public ListView<FoodItem> foodList;
+    public ListView<FoodItem> mealList;
     
     //info pane
     public CategoryAxis xAxis;
