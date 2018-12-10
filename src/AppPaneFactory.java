@@ -1,6 +1,8 @@
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -160,11 +162,18 @@ public class AppPaneFactory {
         appPane.infoButton = new Button(("Analyze"));
         
         appPane.infoButton.setOnAction(update -> {
+        	FoodData.updateMealInfo();
         	totalFat.setText("Total Fat: " + FoodData.mealFat);
             totalFiber.setText("Total Fiber: " + FoodData.mealFiber);
             totalCalories.setText("Total Calories: " + FoodData.mealCalories);
             totalCarbs.setText("Total Carbohydrates: " + FoodData.mealCarbs);
             totalProtein.setText("Total Protein: " + FoodData.mealProtein);
+            
+            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fat", Double.valueOf(FoodData.mealFat)));
+            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fiber", Double.valueOf(FoodData.mealFiber)));
+            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Calories", Double.valueOf(FoodData.mealCalories)));
+            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Carbohydrates", Double.valueOf(FoodData.mealCarbs)));
+            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Protein", Double.valueOf(FoodData.mealProtein)));
         });
 
         return appPane;

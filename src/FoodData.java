@@ -20,7 +20,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	// List of all the food items.
     private List<FoodItem> foodItemList;
     
-    private List<FoodItem> meal;
+    private static List<FoodItem> meal;
     
     public static Double mealFat;
     public static Double mealFiber;
@@ -240,5 +240,26 @@ public class FoodData implements FoodDataADT<FoodItem> {
     		writer.print("protein," + Double.toString(food.getNutrientValue("protein")) + "\n");
     	}
     	writer.flush();
+    }
+    
+    public static void updateMealInfo() {
+    	Double newFat = 0.0;
+    	Double newFiber = 0.0;
+    	Double newCalories = 0.0;
+    	Double newCarbs = 0.0;
+    	Double newProtein = 0.0;
+    	for(int i = 0; i < meal.size(); i++) {
+    		newFat += meal.get(i).getNutrientValue("fat");
+    		newFiber += meal.get(i).getNutrientValue("fiber");
+    		newCalories += meal.get(i).getNutrientValue("calories");
+    		newCarbs += meal.get(i).getNutrientValue("carbohydrate");
+    		newProtein += meal.get(i).getNutrientValue("protein");
+    	}
+    	
+    	mealFat = newFat;
+    	mealFiber = newFiber;
+    	mealCalories = newCalories;
+    	mealCarbs = newCarbs;
+    	mealProtein = newProtein;
     }
 }
