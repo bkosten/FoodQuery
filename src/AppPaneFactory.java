@@ -1,3 +1,4 @@
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
@@ -14,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -126,19 +128,33 @@ public class AppPaneFactory {
         appPane.xAxis.setLabel("N");
         appPane.yAxis.setLabel("%");
 
-        appPane.image = new Image("/nutritional_facts.png", true);
-        appPane.imageView = new ImageView(appPane.image);
-        appPane.imageView.setId("imageView");
-
-        appPane.imageView.setPreserveRatio(true);
-        appPane.imageView.setSmooth(true);
-        appPane.imageView.setCache(true);
-
-        //set preferred size of image
-        appPane.imageView.setFitHeight(Main.GUI_HEIGHT/3);
-        appPane.imageView.setFitWidth(Main.GUI_WIDTH/3);
-
+        appPane.infoValueVBox = new VBox(Main.GUI_HEIGHT/96);
+        
+        Text totalFat = new Text();
+        Text totalFiber = new Text();
+        Text totalCalories = new Text();
+        Text totalCarbs = new Text();
+        Text totalProtein = new Text();
+        
+        totalFat.setText("Total Fat: " + FoodData.mealFat);
+        totalFiber.setText("Total Fiber: " + FoodData.mealFiber);
+        totalCalories.setText("Total Calories: " + FoodData.mealCalories);
+        totalCarbs.setText("Total Carbohydrates: " + FoodData.mealCarbs);
+        totalProtein.setText("Total Protein: " + FoodData.mealProtein);
+        
+        
+        appPane.infoValueVBox.getChildren().addAll(totalFat, totalFiber, totalCalories
+        		, totalCarbs, totalProtein);
+        
         appPane.infoButton = new Button(("Analyze"));
+        
+        appPane.infoButton.setOnAction(update -> {
+        	totalFat.setText("Total Fat: " + FoodData.mealFat);
+            totalFiber.setText("Total Fiber: " + FoodData.mealFiber);
+            totalCalories.setText("Total Calories: " + FoodData.mealCalories);
+            totalCarbs.setText("Total Carbohydrates: " + FoodData.mealCarbs);
+            totalProtein.setText("Total Protein: " + FoodData.mealProtein);
+        });
 
         return appPane;
     }

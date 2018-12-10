@@ -36,8 +36,10 @@ public class AppPane extends VBox {
     public CategoryAxis xAxis;
     public NumberAxis yAxis;
     public BarChart<String,Number> bc;
-    public Image image;
-    public ImageView imageView;
+    //public Image image;
+   // public ImageView imageView;
+    public VBox infoValueVBox;
+    
     public Button infoButton;
     
     

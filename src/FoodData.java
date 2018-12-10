@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 /**
  * This class represents the back-end for managing all 
  * the operations associated with FoodItems
@@ -17,6 +19,14 @@ public class FoodData implements FoodDataADT<FoodItem> {
 
 	// List of all the food items.
     private List<FoodItem> foodItemList;
+    
+    private List<FoodItem> meal;
+    
+    public static Double mealFat;
+    public static Double mealFiber;
+    public static Double mealCalories;
+    public static Double mealCarbs;
+    public static Double mealProtein;
 
     // Map of nutrients and their corresponding index
     private HashMap<String, BPTree<Double, FoodItem>> indexes;
@@ -27,6 +37,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     public FoodData() {
         foodItemList = new ArrayList<FoodItem>();
+        meal = new ArrayList<FoodItem>();
         indexes = new HashMap<String,BPTree<Double,FoodItem>>();
         
         indexes.put("fat", new BPTree<Double,FoodItem>(3)); //BRANCHING FACTOR IS SUBJECT TO CHANGE
@@ -34,6 +45,12 @@ public class FoodData implements FoodDataADT<FoodItem> {
         indexes.put("calories", new BPTree<Double,FoodItem>(3));
         indexes.put("carbohydrate", new BPTree<Double,FoodItem>(3));
         indexes.put("protein", new BPTree<Double,FoodItem>(3));
+        
+        mealFat = 0.0;
+        mealFiber = 0.0;
+        mealCalories =  0.0;
+        mealCarbs =  0.0;
+        mealProtein =  0.0;
     }
     
     
