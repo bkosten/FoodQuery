@@ -308,10 +308,11 @@ public class AppPaneFactory {
             		emptyFieldsError.show();
             		return; //don't add anything
             	}
-            	/* If one of the fields is filled, remove food (if it exists) */
-            	
-            	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
-            	popUp.close();
+                else {
+                    /* If one of the fields is filled, remove food (if it exists) */
+                    Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
+                    popUp.close();
+                }
             	
             });
 
