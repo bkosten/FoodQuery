@@ -197,6 +197,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
     @Override
     public void saveFoodItems(String filename) {
     	/* Prepare the necessary I/O objects */
+    	System.out.println(filename);
     	File file = new File(filename);
     	PrintWriter writer = null;
     	try { 

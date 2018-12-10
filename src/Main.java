@@ -4,14 +4,17 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Main extends Application
@@ -57,9 +60,8 @@ public class Main extends Application
         root.setCenter(mealPane);
         root.setRight(infoPane);
         
-        /* ---THIS SECTION IS FOR THE FILE/SAVE BAR AT THE TOP...WILL BE PUT ELSEWHERE --- */
+        
         MenuBar menuBar = new MenuBar();
-        // --- Menu File
         Menu menuFile = new Menu("File");
         MenuItem save = new MenuItem("Save");
         MenuItem load = new MenuItem("Load");
@@ -67,9 +69,14 @@ public class Main extends Application
         	Stage popup = new Stage();
         	FileChooser saveWindow = new FileChooser();
         	saveWindow.setTitle("Save");
-        	saveWindow.showOpenDialog(popup);
-        	File selectedFile = saveWindow.showOpenDialog(popup);
-        	Main.foodDataBase.saveFoodItems(selectedFile.getAbsolutePath());
+       	 saveWindow.getExtensionFilters().addAll(
+    	         new ExtensionFilter("Text Files", "*.txt"),
+    	         new ExtensionFilter("CSV Files", "*.csv"));        	
+        	saveWindow.showSaveDialog(popup);
+
+        	//Main.foodDataBase.saveFoodItems(saveWindow.getInitialFileName());
+        	 System.out.println(saveWindow.getInitialFileName());
+        	popup.close();
         });
         load.setOnAction(click -> {
         	Stage popup = new Stage();
@@ -166,6 +173,7 @@ public class Main extends Application
         });
         
         menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis);
+        menuFile.getItems().addAll(load,save);
         menuBar.getMenus().addAll(menuFile, menuHelp);
         root.setTop(menuBar);
         
