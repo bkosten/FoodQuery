@@ -69,11 +69,12 @@ public class Main extends Application
         	Stage popup = new Stage();
         	FileChooser saveWindow = new FileChooser();
         	saveWindow.setTitle("Save");
-       	 saveWindow.getExtensionFilters().addAll(
-    	         new ExtensionFilter("Text Files", "*.txt"),
-    	         new ExtensionFilter("CSV Files", "*.csv"));    
-       Main.foodDataBase.saveFoodItems(saveWindow.getInitialFileName());
-        	saveWindow.showSaveDialog(popup);
+       	 	saveWindow.getExtensionFilters().addAll(
+    	         new ExtensionFilter("Text File (.txt)", "*.txt"),
+    	         new ExtensionFilter("CSV File (.csv)", "*.csv"));    
+        	
+        	File selectedFile = saveWindow.showSaveDialog(popup);
+       	 	Main.foodDataBase.saveFoodItems(selectedFile.getName());
         	popup.close();
         });
         load.setOnAction(click -> {
