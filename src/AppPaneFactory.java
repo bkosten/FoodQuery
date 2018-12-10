@@ -96,7 +96,7 @@ public class AppPaneFactory {
 
                 if (c.wasRemoved()) {
                     //System.out.println("Removed");
-                    for (FoodItem foodItem : c.getAddedSubList()) {
+                    for (FoodItem foodItem : c.getRemoved()) {
                         //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
                         Label label = appPane.contentLabels.stream().filter((l) -> l.getText().equals(foodItem.getName())).findFirst().get();
                         appPane.contentVBox.getChildren().remove(label);
@@ -311,6 +311,9 @@ public class AppPaneFactory {
             	/* If one of the fields is filled, remove food (if it exists) */
             	
             	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
+
+            	popUp.close();
+            	
             });
 
             VBox root = new VBox();
