@@ -155,6 +155,9 @@ public class AppPaneFactory {
         appPane.bc.setPrefSize(Main.GUI_WIDTH/2, Main.GUI_HEIGHT/1.5);
         appPane.bc.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
         
+        appPane.bcContainer = new HBox();
+        appPane.bcContainer.getChildren().add(appPane.bc);
+        
         
         
         //displays meal nutrition as text values

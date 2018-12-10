@@ -35,7 +35,7 @@ public class AppPane extends VBox {
     
     //info pane
     
- 
+    public HBox bcContainer;
     public BarChart<String,Number> bc;
     public XYChart.Series<String, Number> nutrients;
     public CategoryAxis xAxis;
