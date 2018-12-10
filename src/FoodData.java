@@ -27,6 +27,12 @@ public class FoodData implements FoodDataADT<FoodItem> {
     public static Double mealCalories;
     public static Double mealCarbs;
     public static Double mealProtein;
+    
+    public static final Double DVFat = 65.0;
+    public static final Double DVFiber = 25.0;
+    public static final Double DVCals = 2000.0;
+    public static final Double DVCarbs = 300.0;
+    public static final Double DVProtein = 50.0;
 
     // Map of nutrients and their corresponding index
     private HashMap<String, BPTree<Double, FoodItem>> indexes;
