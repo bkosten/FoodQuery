@@ -308,20 +308,15 @@ public class AppPaneFactory {
             		emptyFieldsError.show();
             		return; //don't add anything
             	}
-<<<<<<< HEAD
-            	/* If one of the fields is filled, remove food (if it exists) */
-            	
-            	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
 
-            	popUp.close();
-=======
                 else {
                     /* If one of the fields is filled, remove food (if it exists) */
-                    Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
+                    Main.foodPane.content.removeIf(food -> 
+                    	food.getName().equals(nameInput.getText()) ||
+                    	food.getID().equals(idInput.getText()));
                     popUp.close();
                 }
->>>>>>> 87911e4ec22ca9ba2626c1e620b4fbb4ffb01ccd
-            	
+
             });
 
             VBox root = new VBox();
