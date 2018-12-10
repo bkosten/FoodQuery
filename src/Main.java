@@ -74,14 +74,22 @@ public class Main extends Application
     	         new ExtensionFilter("CSV File (.csv)", "*.csv"));    
         	
         	File selectedFile = saveWindow.showSaveDialog(popup);
-       	 	Main.foodDataBase.saveFoodItems(selectedFile.getName());
+        	if (!popup.isShowing()) return; //closed window before saving
+       	 	Main.foodDataBase.saveFoodItems(selectedFile.getAbsolutePath());
         	popup.close();
         });
         load.setOnAction(click -> {
         	Stage popup = new Stage();
         	FileChooser loadWindow = new FileChooser();
         	loadWindow.setTitle("Load");
-        	loadWindow.showOpenDialog(popup);
+       	 	loadWindow.getExtensionFilters().addAll(
+    	         new ExtensionFilter("Text File (.txt)", "*.txt"),
+    	         new ExtensionFilter("CSV File (.csv)", "*.csv"));    
+        	
+        	File selectedFile = loadWindow.showOpenDialog(popup);
+        	if (!popup.isShowing()) return; //closed window before loading
+       	 	Main.foodDataBase.loadFoodItems(selectedFile.getAbsolutePath());
+        	popup.close();
         });
 	
         // --- Menu Help
