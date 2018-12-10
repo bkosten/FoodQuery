@@ -311,8 +311,6 @@ public class AppPaneFactory {
             	/* If one of the fields is filled, remove food (if it exists) */
             	
             	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
-            	System.out.println(Main.foodPane.content.get(1));
-            	
             });
 
             VBox root = new VBox();
