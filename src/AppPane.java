@@ -34,14 +34,16 @@ public class AppPane extends VBox {
     public HBox addRemoveFood;
     
     //info pane
-    public CategoryAxis xAxis;
-    public NumberAxis yAxis;
+    
+ 
     public BarChart<String,Number> bc;
     public XYChart.Series<String, Number> nutrients;
+    public CategoryAxis xAxis;
+    public NumberAxis yAxis;
     //public Image image;
    // public ImageView imageView;
-    public VBox infoValueVBox;
     
+    public VBox infoValueVBox;
     public Button infoButton;
     
     
