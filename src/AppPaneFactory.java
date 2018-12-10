@@ -11,6 +11,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -130,6 +131,7 @@ public class AppPaneFactory {
         //init bar chart
         appPane.xAxis = new CategoryAxis();
         appPane.yAxis = new NumberAxis();
+        
         appPane.bc = new BarChart<String,Number>(appPane.xAxis, appPane.yAxis);
 
         appPane.bc.setTitle("Info");
@@ -153,6 +155,12 @@ public class AppPaneFactory {
         		Double.valueOf(100*FoodData.mealProtein/FoodData.DVProtein)));
         
         appPane.bc.getData().add(appPane.nutrients);
+        appPane.bc.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        appPane.bc.setPrefSize(Main.GUI_WIDTH/2, Main.GUI_HEIGHT/1.5);
+        appPane.bc.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        
+        appPane.bcContainer = new HBox();
+        appPane.bcContainer.getChildren().add(appPane.bc);
         
         
         
@@ -181,11 +189,11 @@ public class AppPaneFactory {
         
         appPane.infoButton.setOnAction(update -> {
         	FoodData.updateMealInfo();
-        	totalFat.setText("Total Fat: " + FoodData.mealFat);
-            totalFiber.setText("Total Fiber: " + FoodData.mealFiber);
-            totalCalories.setText("Total Calories: " + FoodData.mealCalories);
-            totalCarbs.setText("Total Carbohydrates: " + FoodData.mealCarbs);
-            totalProtein.setText("Total Protein: " + FoodData.mealProtein);
+        	totalFat.setText("Total Fat: " + FoodData.mealFat + "g");
+            totalFiber.setText("Total Fiber: " + FoodData.mealFiber + "g");
+            totalCalories.setText("Total Calories: " + FoodData.mealCalories + "cal");
+            totalCarbs.setText("Total Carbohydrates: " + FoodData.mealCarbs + "g");
+            totalProtein.setText("Total Protein: " + FoodData.mealProtein + "g");
             
             appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fat",
             		Double.valueOf(100*FoodData.mealFat/FoodData.DVFat)));
