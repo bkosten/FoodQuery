@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -125,9 +126,19 @@ public class AppPaneFactory {
         appPane.bc = new BarChart<String,Number>(appPane.xAxis, appPane.yAxis);
 
         appPane.bc.setTitle("Info");
-        appPane.xAxis.setLabel("N");
+        appPane.xAxis.setLabel("Nutrient");
         appPane.yAxis.setLabel("%");
-
+        appPane.bc.setCategoryGap(Main.GUI_WIDTH/24);
+        
+        appPane.nutrients = new XYChart.Series<String, Number>();
+        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fat", Double.valueOf(FoodData.mealFat)));
+        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fiber", Double.valueOf(FoodData.mealFiber)));
+        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Calories", Double.valueOf(FoodData.mealCalories)));
+        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Carbohydrates", Double.valueOf(FoodData.mealCarbs)));
+        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Protein", Double.valueOf(FoodData.mealProtein)));
+        
+        appPane.bc.getData().add(appPane.nutrients);
+        
         appPane.infoValueVBox = new VBox(Main.GUI_HEIGHT/96);
         
         Text totalFat = new Text();

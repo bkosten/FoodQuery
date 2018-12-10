@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -36,6 +37,7 @@ public class AppPane extends VBox {
     public CategoryAxis xAxis;
     public NumberAxis yAxis;
     public BarChart<String,Number> bc;
+    public XYChart.Series<String, Number> nutrients;
     //public Image image;
    // public ImageView imageView;
     public VBox infoValueVBox;
