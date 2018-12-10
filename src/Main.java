@@ -20,8 +20,8 @@ import javafx.scene.text.Text;
 public class Main extends Application
 {
 	//GUI Size
-	public static final float GUI_WIDTH = 640;
-	public static final float GUI_HEIGHT = 480;
+	public static final float GUI_WIDTH = 1200;
+	public static final float GUI_HEIGHT = 650;
 	
 	public static FoodData foodDataBase;
 	public static AppPane foodPane;
