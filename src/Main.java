@@ -71,11 +71,9 @@ public class Main extends Application
         	saveWindow.setTitle("Save");
        	 saveWindow.getExtensionFilters().addAll(
     	         new ExtensionFilter("Text Files", "*.txt"),
-    	         new ExtensionFilter("CSV Files", "*.csv"));        	
+    	         new ExtensionFilter("CSV Files", "*.csv"));    
+       Main.foodDataBase.saveFoodItems(saveWindow.getInitialFileName());
         	saveWindow.showSaveDialog(popup);
-
-        	//Main.foodDataBase.saveFoodItems(saveWindow.getInitialFileName());
-        	 System.out.println(saveWindow.getInitialFileName());
         	popup.close();
         });
         load.setOnAction(click -> {
@@ -84,8 +82,6 @@ public class Main extends Application
         	loadWindow.setTitle("Load");
         	loadWindow.showOpenDialog(popup);
         });
-
-	menuBar.getMenus().addAll(menuFile);
 	
         // --- Menu Help
         Menu menuHelp = new Menu("Help");
@@ -175,12 +171,8 @@ public class Main extends Application
         });
         
         menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis);
-<<<<<<< HEAD
         menuFile.getItems().addAll(load,save);
         menuBar.getMenus().addAll(menuFile, menuHelp);
-=======
-        menuBar.getMenus().addAll(menuHelp);
->>>>>>> bc167ddfb67ecda2244420788208e41a71dad844
         root.setTop(menuBar);
         
         /* ----------------------------------------------------------------------------------- */
