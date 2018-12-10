@@ -236,7 +236,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
     		writer.print("carbohydrate," + 
     				Double.toString(food.getNutrientValue("carbohydrate")) + ",");
     		writer.print("fiber," + Double.toString(food.getNutrientValue("fiber")) + ",");
-    		writer.print("protein," + Double.toString(food.getNutrientValue("protein")) + "");
+    		writer.print("protein," + Double.toString(food.getNutrientValue("protein")) + "\n");
     	}
     	writer.flush();
     }

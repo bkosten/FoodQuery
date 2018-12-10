@@ -263,12 +263,16 @@ public class AppPaneFactory {
             /* Add a listener for when the button is pressed. Remove from observable list. */
             removeButton.setOnAction(click -> {
             	/* First, check for empty user input. Display error if so. */
-            	if (nameInput.getText().length() == 0 || idInput.getText().length() == 0) {
+            	if (nameInput.getText().length() == 0 && idInput.getText().length() == 0) {
             		Alert emptyFieldsError = new Alert
             				(AlertType.ERROR,"Remove food error: missing field(s)");
             		emptyFieldsError.show();
             		return; //don't add anything
             	}
+            	/* If one of the fields is filled, remove food (if it exists) */
+            	
+            	Main.foodPane.content.removeIf(food -> food.getName().equals(nameInput.getText()));
+            	System.out.println(Main.foodPane.content.get(1));
             	
             });
 
