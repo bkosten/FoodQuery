@@ -73,6 +73,8 @@ public class Main extends Application
         	loadWindow.setTitle("Load");
         	loadWindow.showOpenDialog(popup);
         });
+
+	menuBar.getMenus().addAll(menuFile);
 	
         // --- Menu Help
         Menu menuHelp = new Menu("Help");
@@ -162,7 +164,7 @@ public class Main extends Application
         });
         
         menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis);
-        menuBar.getMenus().addAll(menuFile, menuHelp);
+        menuBar.getMenus().addAll(menuHelp);
         root.setTop(menuBar);
         
         /* ----------------------------------------------------------------------------------- */
