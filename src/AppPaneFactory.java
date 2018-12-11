@@ -91,7 +91,19 @@ public class AppPaneFactory {
                     //System.out.println("Added");
                     for (FoodItem foodItem : c.getAddedSubList()) {
                         Label label = new Label(foodItem.getName());
-                        label.setOnMouseClicked(event->	Main.mealPane.content.add(foodItem));
+                        label.setOnMouseClicked(event->	{
+                        	
+                            switch (paneType) {
+                            case FOOD_PANE:
+                            	Main.mealPane.content.add(foodItem);
+                                break;
+
+                            case MEAL_PANE:
+                            	Main.mealPane.content.remove(foodItem);
+                                break;
+                        }
+                        	
+                        	;});
                         appPane.contentLabels.add(label);
                         appPane.contentVBox.getChildren().add(label);
                     }
