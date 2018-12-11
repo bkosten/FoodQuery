@@ -254,12 +254,12 @@ public class FoodData implements FoodDataADT<FoodItem> {
     	Double newCalories = 0.0;
     	Double newCarbs = 0.0;
     	Double newProtein = 0.0;
-    	for(int i = 0; i < meal.size(); i++) {
-    		newFat += meal.get(i).getNutrientValue("fat");
-    		newFiber += meal.get(i).getNutrientValue("fiber");
-    		newCalories += meal.get(i).getNutrientValue("calories");
-    		newCarbs += meal.get(i).getNutrientValue("carbohydrate");
-    		newProtein += meal.get(i).getNutrientValue("protein");
+    	for(int i = 0; i < Main.mealPane.content.size(); i++) {
+    		newFat += Main.mealPane.content.get(i).getNutrientValue("fat");
+    		newFiber += Main.mealPane.content.get(i).getNutrientValue("fiber");
+    		newCalories += Main.mealPane.content.get(i).getNutrientValue("calories");
+    		newCarbs += Main.mealPane.content.get(i).getNutrientValue("carbohydrate");
+    		newProtein += Main.mealPane.content.get(i).getNutrientValue("protein");
     	}
     	
     	mealFat = newFat;
