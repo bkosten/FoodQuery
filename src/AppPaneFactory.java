@@ -110,11 +110,23 @@ public class AppPaneFactory {
                 }
 
                 if (c.wasRemoved()) {
-                    //System.out.println("Removed");
+                   
                     for (FoodItem foodItem : c.getRemoved()) {
                         //appPane.contentLabels should be replaced in favor of a dictionary of <foodItem : label>
-                        Label label = appPane.contentLabels.stream().filter((l) -> l.getText().equals(foodItem.getName())).findFirst().get();
-                        appPane.contentVBox.getChildren().remove(label);
+                        Label label = appPane.contentLabels.stream().filter((l) -> 
+                        l.getText().equals(foodItem.getName())).findFirst().get();
+                        switch (paneType) {
+                        case FOOD_PANE:
+                        	appPane.contentVBox.getChildren().remove(label);
+                            break;
+
+                        case MEAL_PANE:
+                        	appPane.contentVBox.getChildren().remove(label);
+                        	appPane.contentLabels.remove(label);
+                            break;
+                    }
+                        
+                        
                     }
                 }
             }
