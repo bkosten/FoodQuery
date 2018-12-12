@@ -212,7 +212,7 @@ public class Main extends Application
         		Stage popup = new Stage();
         		popup.setTitle("Select and add food to Meal pane?");
         		Text text = new Text();
-        		text.setText("Double click a food item in the Food pane to add it to the Meal pane.");
+        		text.setText("Click a food item in the Food pane to add it to the Meal pane.");
         		text.setFont(Font.font("verdana", 20));
         		text.setX(50);
         		text.setY(50);
@@ -232,7 +232,7 @@ public class Main extends Application
         		Stage popup = new Stage();
         		popup.setTitle("Cancel food in Meal pane?");
         		Text text = new Text();
-        		text.setText("Double click a food item in the Meal pane to cancel it.");
+        		text.setText("Click a food item in the Meal pane to cancel it.");
         		text.setFont(Font.font("verdana", 20));
         		text.setX(50);
         		text.setY(50);
