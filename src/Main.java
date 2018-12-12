@@ -246,6 +246,7 @@ public class Main extends Application
         
         
         menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis, selectFood, cancelFood);
+        menuFile.getItems().addAll(load,save);
         menuBar.getMenus().addAll(menuFile, menuHelp);
         root.setTop(menuBar);
         
