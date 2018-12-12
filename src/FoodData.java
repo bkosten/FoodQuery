@@ -53,11 +53,11 @@ public class FoodData implements FoodDataADT<FoodItem> {
         indexes.put("protein", new BPTree<Double,FoodItem>(3));
         
         //these originally will be set to 0 but are set to arbitrary values to test bar chart
-        mealFat = 10.5;
-        mealFiber = 5.2;
-        mealCalories =  580.0;
-        mealCarbs =  74.0;
-        mealProtein =  8.9;
+        mealFat = 0.0;
+        mealFiber = 0.0;
+        mealCalories =  0.0;
+        mealCarbs =  0.0;
+        mealProtein =  0.0;
     }
     
     
