@@ -100,6 +100,7 @@ public class Main extends Application
         MenuItem removeFood = new MenuItem("Remove food");
         MenuItem submitQuery = new MenuItem("Submit query");
         MenuItem selectFood = new MenuItem("Select food");
+        MenuItem cancelFood = new MenuItem("Cancel food");
         MenuItem viewFood = new MenuItem("View food");
         MenuItem analysis = new MenuItem("Analyze food");
         
@@ -109,7 +110,7 @@ public class Main extends Application
         	@Override
         	public void handle(ActionEvent e) {
         		Stage popup = new Stage();
-            	popup.setTitle("Add food?");
+            	popup.setTitle("Add food in Food pane?");
             	Text text = new Text();
             	text.setText("Click '+' in the Food pane, then enter name and nutrient information of food");
             	text.setFont(Font.font("verdana", 20));
@@ -129,7 +130,7 @@ public class Main extends Application
         	@Override
         	public void handle(ActionEvent e) {
         		Stage popup = new Stage();
-        		popup.setTitle("Remove food?");
+        		popup.setTitle("Remove food from Food pane?");
         		Text text = new Text();
         		text.setText("Click '-' in the Food pane, then select food to remove");
         		text.setFont(Font.font("verdana", 20));
@@ -149,7 +150,7 @@ public class Main extends Application
         	@Override
         	public void handle(ActionEvent e) {
         		Stage popup = new Stage();
-        		popup.setTitle("Submit food query?");
+        		popup.setTitle("Submit food query to Food pane?");
         		Text text = new Text();
         		text.setText("Enter food name in the textfield of the Food pane to query for details");
         		text.setFont(Font.font("verdana", 20));
@@ -169,7 +170,7 @@ public class Main extends Application
         	@Override
         	public void handle(ActionEvent e) {
         		Stage popup = new Stage();
-        		popup.setTitle("View food?");
+        		popup.setTitle("View food in Meal pane?");
         		Text text = new Text();
         		text.setText("Scroll down to see added food in the Meal pane");
         		text.setFont(Font.font("verdana", 20));
@@ -209,9 +210,9 @@ public class Main extends Application
         	@Override
         	public void handle(ActionEvent e) {
         		Stage popup = new Stage();
-        		popup.setTitle("Select and add food to meal list?");
+        		popup.setTitle("Select and add food to Meal pane?");
         		Text text = new Text();
-        		text.setText("Double click a food item from the Food pane to add it to the Meal pane.");
+        		text.setText("Double click a food item in the Food pane to add it to the Meal pane.");
         		text.setFont(Font.font("verdana", 20));
         		text.setX(50);
         		text.setY(50);
@@ -223,8 +224,28 @@ public class Main extends Application
         });
         
         
-        menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis, selectFood);
-        menuFile.getItems().addAll(load,save);
+        // A popup window displaying instructions to cancel food in the Meal pane
+        cancelFood.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		Stage popup = new Stage();
+        		popup.setTitle("Cancel food in Meal pane?");
+        		Text text = new Text();
+        		text.setText("Double click a food item in the Meal pane to cancel it.");
+        		text.setFont(Font.font("verdana", 20));
+        		text.setX(50);
+        		text.setY(50);
+        		Group textGroup = new Group(text);
+        		Scene cancelFood = new Scene(textGroup, 600, 300);
+        		popup.setScene(cancelFood);
+        		popup.show();
+        	}
+        	
+        });
+        
+        
+        menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis, selectFood, cancelFood);
         menuBar.getMenus().addAll(menuFile, menuHelp);
         root.setTop(menuBar);
         
