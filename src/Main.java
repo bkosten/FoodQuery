@@ -54,6 +54,7 @@ public class Main extends Application
         foodPane.setPrefWidth(GUI_WIDTH/4);
         mealPane.setPrefWidth(GUI_WIDTH/4);
         infoPane.setPrefWidth(GUI_WIDTH/2);
+        infoPane.setSpacing(15);
 
         // Set the alignment of the panes
         root.setLeft(foodPane);
@@ -257,7 +258,6 @@ public class Main extends Application
         scene.getStylesheets().add("styles.css");
         stage.setScene(scene);
         stage.setTitle("Food Query");
-
         stage.show();
         
         

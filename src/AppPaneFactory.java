@@ -1,5 +1,6 @@
 
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -17,8 +18,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -165,8 +164,8 @@ public class AppPaneFactory {
         appPane.xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Fat", "Fiber"
         		, "Calories", "Carbohydrates", "Protein")));
         
-        //puts in initial data
         appPane.nutrients = new XYChart.Series<String, Number>();
+        //puts in initial data
         appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fat",
         		Double.valueOf(100*FoodData.mealFat/FoodData.DVFat)));
         appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fiber", 
@@ -183,7 +182,8 @@ public class AppPaneFactory {
         appPane.bc.setPrefSize(Main.GUI_WIDTH/2, Main.GUI_HEIGHT/1.5);
         appPane.bc.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);      
         
-        
+        appPane.bcContainer = new VBox();
+        appPane.bcContainer.getChildren().add(appPane.bc);
         //displays meal nutrition as text values
         appPane.infoValueVBox = new VBox(Main.GUI_HEIGHT/96);
         
@@ -200,6 +200,7 @@ public class AppPaneFactory {
         totalProtein.setText("Total Protein: " + FoodData.mealProtein + "g");
         
         
+        
         appPane.infoValueVBox.getChildren().addAll(totalFat, totalFiber, totalCalories
         		, totalCarbs, totalProtein);
         
@@ -209,6 +210,7 @@ public class AppPaneFactory {
         
         appPane.infoButton.setOnAction(update -> {
         	FoodData.updateMealInfo();
+        	
         	totalFat.setText("Total Fat: " + FoodData.mealFat + "g");
             totalFiber.setText("Total Fiber: " + FoodData.mealFiber + "g");
             totalCalories.setText("Total Calories: " + FoodData.mealCalories + "cal");
@@ -226,7 +228,7 @@ public class AppPaneFactory {
             appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Protein", 
             		Double.valueOf(100*FoodData.mealProtein/FoodData.DVProtein)));
         });
-
+        
         return appPane;
     }
 
@@ -391,6 +393,7 @@ public class AppPaneFactory {
     }
     
     public static AppPane consolidate(AppPane appPane) {
+    	
         appPane.top.getChildren().add(appPane.topLabel);
 
         for (Field field : appPane.getClass().getDeclaredFields()) {
@@ -418,4 +421,7 @@ public class AppPaneFactory {
         }
         return appPane;
     }
+    
+    
+    
 }
