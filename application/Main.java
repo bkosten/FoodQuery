@@ -246,6 +246,8 @@ public class Main extends Application
         	}
         	
         });
+
+
         
         
         menuHelp.getItems().addAll(addFood, removeFood, submitQuery, viewFood, analysis, selectFood, cancelFood);

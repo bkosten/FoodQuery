@@ -100,6 +100,11 @@ public class FoodData implements FoodDataADT<FoodItem> {
     		indexes.get("fiber").insert(newFood.getNutrientValue("fiber"), newFood);
     		indexes.get("calories").insert(newFood.getNutrientValue("calories"), newFood);
     	}
+
+		Main.foodPane.cachedContent = new ArrayList<>();
+		for (int i = 0; i < Main.foodPane.content.size(); i++) {
+			Main.foodPane.cachedContent.add(Main.foodPane.content.get(i));
+		}
     }
 
     /*

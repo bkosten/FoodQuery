@@ -27,6 +27,7 @@ public class AppPane extends VBox {
     public ScrollPane contentScrollPane;
     public VBox contentVBox;
     public ObservableList<FoodItem> content;
+    public ArrayList<FoodItem> cachedContent;
     public ObservableList<Label> contentLabels;
     public HBox addRemoveFood;
     public ListView<FoodItem> foodList;

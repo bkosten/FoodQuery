@@ -9,7 +9,7 @@ nosrc: application/Main.java
 
 
 srcbin: application/Main.java
-	mkdir bin
+	mkdir -p 	bin
 	javac -d bin application/*.java
 	jar -cfm executable.jar manifest_srcbin.txt -C bin application
 

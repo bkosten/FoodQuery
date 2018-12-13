@@ -4,6 +4,8 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -26,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.locks.Condition;
@@ -78,6 +81,33 @@ public class AppPaneFactory {
             case FOOD_PANE:
                 initPane(appPane, "Food");
                 appPane.topTextField = new TextField("Query");
+                appPane.topTextField.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        String query = appPane.topTextField.getText();
+                        query = query.toLowerCase();
+                        if (query.equals("")) {
+                            for (int i = 0; i < Main.foodPane.cachedContent.size(); i++) {
+                                if (!Main.foodPane.content.contains(Main.foodPane.cachedContent.get(i))) {
+                                    Main.foodPane.content.add(Main.foodPane.cachedContent.get(i));
+                                }
+                            }
+                            buildPopup(appPane);
+                            return;
+                        }
+                        ArrayList<String> commands = new ArrayList<>();
+                        commands.add(query);
+                        ArrayList<FoodItem> foodItems = (ArrayList<FoodItem>) Main.foodDataBase.filterByNutrients(commands);
+
+                        for (int i = 0; i < Main.foodPane.content.size(); i++) {
+                            if (!foodItems.contains(Main.foodPane.content.get(i))) {
+                                Main.foodPane.content.remove(Main.foodPane.content.get(i));
+                                i--;
+                            }
+                        }
+                    }
+                });
+
                 buildPopup(appPane);
                 break;
 
