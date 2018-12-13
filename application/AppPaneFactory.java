@@ -157,6 +157,10 @@ public class AppPaneFactory {
                         switch (paneType) {
                         case FOOD_PANE:
                         	appPane.contentVBox.getChildren().remove(label);
+                        	appPane.cachedContent = new ArrayList<>();
+                            for (int i = 0; i < Main.foodPane.content.size(); i++) {
+                                appPane.cachedContent.add(Main.foodPane.content.get(i));
+                            }
                             break;
 
                         case MEAL_PANE:
