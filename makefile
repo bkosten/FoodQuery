@@ -13,7 +13,7 @@ srcbin: src/application/Main.java
 	jar -cfm executable.jar manifest_srcbin.txt -C bin application
 
 clean:
-	\rm application/*.class	
+	\rm *.class	
 
 
 cleanbin:
