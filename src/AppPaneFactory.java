@@ -18,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -34,19 +35,28 @@ public class AppPaneFactory {
     public static AppPane createPane(PaneType paneType) {
         AppPane appPane = new AppPane();
 
-        switch (paneType) {
-            case INFO_PANE:
-                appPane = buildInfoPane(appPane);
-                appPane = consolidate(appPane);
-                break;
+        //switch (paneType) {
+            //case INFO_PANE:
+              //  appPane = buildInfoPane(Main.info, appPane);
+                //appPane = consolidate(appPane);
+               // break;
 
-            default:
+           // default:
                 appPane = buildPane(appPane, paneType);
                 appPane = consolidate(appPane);
-                break;
-        }
+             //   break;
+        //}
 
         return appPane;
+    }
+    
+    public static BorderPane createInfoPane() {
+    	BorderPane infoPane = new BorderPane();
+    	AppPane appPane = new AppPane();
+    	infoPane = buildInfoPane(Main.info, appPane);
+    	appPane = consolidate(appPane);
+    	return infoPane;
+    	
     }
 
 
@@ -148,42 +158,19 @@ public class AppPaneFactory {
         return appPane;
     }
 
-    public static AppPane buildInfoPane(AppPane appPane) {
-        initPane(appPane, "Info");
-
+    public static BorderPane buildInfoPane(BorderPane infoPane, AppPane appPane) {
+        appPane = initPane(appPane, "Info");
+        
+        
+        
         //init bar chart
-        appPane.xAxis = new CategoryAxis();
-        appPane.yAxis = new NumberAxis();
+       
+        //bc.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+        //bc.setPrefSize(Main.GUI_WIDTH/2, Main.GUI_HEIGHT/1.5);
+        //bc.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);      
         
-        appPane.bc = new BarChart<String,Number>(appPane.xAxis, appPane.yAxis);
-
-        appPane.bc.setTitle("Info");
-        appPane.xAxis.setLabel("Nutrient");
-        appPane.yAxis.setLabel("% Daily Value");
-        appPane.bc.setCategoryGap(Main.GUI_WIDTH/24);
-        appPane.xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Fat", "Fiber"
-        		, "Calories", "Carbohydrates", "Protein")));
-        
-        appPane.nutrients = new XYChart.Series<String, Number>();
-        //puts in initial data
-        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fat",
-        		Double.valueOf(100*FoodData.mealFat/FoodData.DVFat)));
-        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fiber", 
-        		Double.valueOf(100*FoodData.mealFiber/FoodData.DVFiber)));
-        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Calories", 
-        		Double.valueOf(100*FoodData.mealCalories/FoodData.DVCals)));
-        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Carbohydrates",
-        		Double.valueOf(100*FoodData.mealCarbs/FoodData.DVCarbs)));
-        appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Protein", 
-        		Double.valueOf(100*FoodData.mealProtein/FoodData.DVProtein)));
-        
-        appPane.bc.getData().add(appPane.nutrients);
-        appPane.bc.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
-        appPane.bc.setPrefSize(Main.GUI_WIDTH/2, Main.GUI_HEIGHT/1.5);
-        appPane.bc.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);      
-        
-        appPane.bcContainer = new VBox();
-        appPane.bcContainer.getChildren().add(appPane.bc);
+        //appPane.bcContainer = new VBox();
+        //appPane.bcContainer.getChildren().add(appPane.bc);
         //displays meal nutrition as text values
         appPane.infoValueVBox = new VBox(Main.GUI_HEIGHT/96);
         
@@ -200,14 +187,39 @@ public class AppPaneFactory {
         totalProtein.setText("Total Protein: " + FoodData.mealProtein + "g");
         
         
-        
         appPane.infoValueVBox.getChildren().addAll(totalFat, totalFiber, totalCalories
         		, totalCarbs, totalProtein);
-        
         
         //updates the values in the info pane with the meal's current nutrient values
         appPane.infoButton = new Button(("Analyze"));
         
+        
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        
+        BarChart<String, Number> bc = new BarChart<String,Number>(xAxis, yAxis);
+
+        bc.setTitle("Info");
+        xAxis.setLabel("Nutrient");
+        yAxis.setLabel("% Daily Value");
+        bc.setCategoryGap(Main.GUI_WIDTH/24);
+        xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Fat", "Fiber"
+        		, "Calories", "Carbohydrates", "Protein")));
+        
+        XYChart.Series<String, Number> nutrients = new XYChart.Series<String, Number>();
+        //puts in initial data
+        nutrients.getData().add(new XYChart.Data<String, Number>("Fat",
+        		Double.valueOf(100*FoodData.mealFat/FoodData.DVFat)));
+        nutrients.getData().add(new XYChart.Data<String, Number>("Fiber", 
+        		Double.valueOf(100*FoodData.mealFiber/FoodData.DVFiber)));
+        nutrients.getData().add(new XYChart.Data<String, Number>("Calories", 
+        		Double.valueOf(100*FoodData.mealCalories/FoodData.DVCals)));
+        nutrients.getData().add(new XYChart.Data<String, Number>("Carbohydrates",
+        		Double.valueOf(100*FoodData.mealCarbs/FoodData.DVCarbs)));
+        nutrients.getData().add(new XYChart.Data<String, Number>("Protein", 
+        		Double.valueOf(100*FoodData.mealProtein/FoodData.DVProtein)));
+        
+        bc.getData().add(nutrients);
         appPane.infoButton.setOnAction(update -> {
         	FoodData.updateMealInfo();
         	
@@ -217,19 +229,20 @@ public class AppPaneFactory {
             totalCarbs.setText("Total Carbohydrates: " + FoodData.mealCarbs + "g");
             totalProtein.setText("Total Protein: " + FoodData.mealProtein + "g");
             
-            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fat",
+            nutrients.getData().add(new XYChart.Data<String, Number>("Fat",
             		Double.valueOf(100*FoodData.mealFat/FoodData.DVFat)));
-            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Fiber",
+            nutrients.getData().add(new XYChart.Data<String, Number>("Fiber",
             		Double.valueOf(100*FoodData.mealFiber/FoodData.DVFiber)));
-            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Calories", 
+            nutrients.getData().add(new XYChart.Data<String, Number>("Calories", 
             		Double.valueOf(100*FoodData.mealCalories/FoodData.DVCals)));
-            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Carbohydrates", 
+            nutrients.getData().add(new XYChart.Data<String, Number>("Carbohydrates", 
             		Double.valueOf(100*FoodData.mealCarbs/FoodData.DVCarbs)));
-            appPane.nutrients.getData().add(new XYChart.Data<String, Number>("Protein", 
+            nutrients.getData().add(new XYChart.Data<String, Number>("Protein", 
             		Double.valueOf(100*FoodData.mealProtein/FoodData.DVProtein)));
         });
-        
-        return appPane;
+        infoPane.setTop(appPane);
+        infoPane.setBottom(bc);
+        return infoPane;
     }
 
     /**

@@ -26,7 +26,8 @@ public class Main extends Application
 	public static FoodData foodDataBase;
 	public static AppPane foodPane;
 	public static AppPane mealPane;
-	public static AppPane infoPane;
+	public static BorderPane infoPane;
+	public static BorderPane info = new BorderPane();
     public static void main(String[] args)
     {
         Application.launch(args);
@@ -36,6 +37,7 @@ public class Main extends Application
     public void start(Stage stage)
     {
         BorderPane root = new BorderPane();
+        
         root.setPrefSize(GUI_WIDTH, GUI_HEIGHT);
         
         foodDataBase = new FoodData();
@@ -43,7 +45,7 @@ public class Main extends Application
         // Split the application up into three panes
         foodPane = AppPaneFactory.createPane(PaneType.FOOD_PANE);
         mealPane = AppPaneFactory.createPane(PaneType.MEAL_PANE);
-        infoPane = AppPaneFactory.createPane(PaneType.INFO_PANE);
+        infoPane = AppPaneFactory.createInfoPane();
 
         foodPane.content.addAll();
         //mealPane.content.addAll("Food5", "Food6", "Food7", "Food8");
@@ -54,7 +56,7 @@ public class Main extends Application
         foodPane.setPrefWidth(GUI_WIDTH/4);
         mealPane.setPrefWidth(GUI_WIDTH/4);
         infoPane.setPrefWidth(GUI_WIDTH/2);
-        infoPane.setSpacing(15);
+        
 
         // Set the alignment of the panes
         root.setLeft(foodPane);

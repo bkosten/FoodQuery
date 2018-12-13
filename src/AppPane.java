@@ -33,11 +33,11 @@ public class AppPane extends VBox {
     public ListView<FoodItem> mealList;
     
     //info pane
-    public VBox bcContainer;
-    public BarChart<String,Number> bc;
-    public XYChart.Series<String, Number> nutrients;
-    public CategoryAxis xAxis;
-    public NumberAxis yAxis;
+    //public VBox bcContainer;
+    //public BarChart<String,Number> bc;
+    //public XYChart.Series<String, Number> nutrients;
+    //public CategoryAxis xAxis;
+    //public NumberAxis yAxis;
     public VBox infoValueVBox;
     public Button infoButton;
     
