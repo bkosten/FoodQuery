@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Created-By: deppeler
+Created-By: bkosten
 Class-Path: bin
-Main-Class: application.Main
+Main-Class: Main
 

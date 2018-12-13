@@ -8,8 +8,9 @@ nosrc: application/Main.java
 	jar -cfm executable.jar manifest.txt application
 
 
-srcbin: src/application/Main.java
-	javac -d bin src/application/*.java
+srcbin: application/Main.java
+	mkdir bin
+	javac -d bin application/*.java
 	jar -cfm executable.jar manifest_srcbin.txt -C bin application
 
 clean:
